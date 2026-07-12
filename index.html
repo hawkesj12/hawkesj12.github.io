@@ -26,6 +26,12 @@
     --shadow:0 1px 2px rgba(22,27,34,.05),0 8px 24px rgba(22,27,34,.06);
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    /* contribution-grid cell levels — derived from --accent, so they follow the theme */
+    --g0:color-mix(in srgb,var(--line) 42%,transparent);
+    --g1:color-mix(in srgb,var(--accent) 15%,transparent);
+    --g2:color-mix(in srgb,var(--accent) 33%,transparent);
+    --g3:color-mix(in srgb,var(--accent) 56%,transparent);
+    --g4:color-mix(in srgb,var(--accent) 84%,transparent);
   }
   @media (prefers-color-scheme: dark){
     :root{--paper:#0F1319;--card:#171C24;--ink:#EEF1F6;--ink-soft:#C3CBD7;--muted:#8B96A6;
@@ -38,7 +44,25 @@
   body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
     line-height:1.55; -webkit-font-smoothing:antialiased; }
   a { color:inherit; }
-  .wrap { max-width:940px; margin:0 auto; padding:44px 28px 72px; }
+  .wrap { max-width:940px; margin:0 auto; padding:44px 28px 72px; position:relative; z-index:1; }
+
+  /* ---- ambient tile grid (background) — --cell is the single scale knob ---- */
+  .bg-grid { --cell:22px; --gap:6px; position:fixed; inset:0; z-index:0; display:grid;
+    gap:var(--gap); padding:8px; grid-auto-rows:var(--cell);
+    justify-content:center; align-content:start;
+    opacity:.62; pointer-events:none; overflow:hidden;
+    -webkit-mask-image:radial-gradient(150% 100% at 50% 30%, #000 46%, transparent 88%);
+            mask-image:radial-gradient(150% 100% at 50% 30%, #000 46%, transparent 88%); }
+  .bg-grid i { width:var(--cell); height:var(--cell); border-radius:calc(var(--cell) * .27);
+    background:var(--g0); }
+  .bg-grid i.c1 { background:var(--g1); }
+  .bg-grid i.c2 { background:var(--g2); }
+  .bg-grid i.c3 { background:var(--g3); }
+  .bg-grid i.c4 { background:var(--g4); }
+  @media (prefers-reduced-motion: no-preference){
+    .bg-grid i { opacity:0; animation:cellIn .55s ease forwards; }
+    @keyframes cellIn { to { opacity:1; } }
+  }
 
   /* ---- top bar ---- */
   .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px;
@@ -111,6 +135,22 @@
   .through p { margin:0; font-size:clamp(16px,2vw,19px); line-height:1.6; max-width:72ch; }
   .through p em { color:var(--accent); font-style:normal; font-weight:600; }
 
+  /* ---- tools / how I work ---- */
+  .tools-lede { font-size:15.5px; color:var(--ink-soft); margin:0 0 18px; max-width:70ch; }
+  .toolgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:12px; }
+  .tool { display:block; text-decoration:none; background:var(--card); border:1px solid var(--line);
+    border-radius:11px; padding:15px 16px 14px; box-shadow:var(--shadow);
+    transition:transform .15s, border-color .15s, box-shadow .15s; }
+  .tool:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+    box-shadow:0 2px 4px rgba(22,27,34,.06),0 12px 28px rgba(22,27,34,.09); }
+  .tool:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .tool .thead { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .tool .tname { font-weight:600; font-size:15.5px; letter-spacing:-.01em; }
+  .tool .tname .arrow { color:var(--accent); font-weight:600; font-size:12.5px; margin-left:3px; }
+  .tool .tcat { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; white-space:nowrap; }
+  .tool .trole { font-size:12.7px; color:var(--muted); margin-top:5px; line-height:1.45; }
+
   /* ---- contact ---- */
   .contact { margin-top:40px; text-align:center; }
   .contact .rail { justify-content:center; }
@@ -160,6 +200,8 @@
 </style>
 </head>
 <body>
+<div class="bg-grid" id="bgGrid" aria-hidden="true"></div>
+
 <div class="wrap">
   <div class="topbar">
     <div class="brand"><span class="dot"></span>JUSTIN HAWKES</div>
@@ -235,6 +277,32 @@
     </article>
   </div>
 
+  <div class="rail">How I work</div>
+  <p class="tools-lede">Part of how one person ships this much: I work at the edge of the tooling, and I pick the sharp tool over the default — often the local, open, or indie one. Knowing which tools are actually worth adopting is its own kind of engineering judgment. These are the ones I reach for every day, built by other builders.</p>
+
+  <div class="toolgrid">
+    <a class="tool" href="https://claude.com/product/claude-code" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">Claude Code<span class="arrow">↗</span></span><span class="tcat">Build</span></div>
+      <div class="trole">My primary build surface — agentic, multi-file, terminal-native. Where I actually ship.</div>
+    </a>
+    <a class="tool" href="https://tryvoiceink.com/" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">VoiceInk<span class="arrow">↗</span></span><span class="tcat">Dictation</span></div>
+      <div class="trole">On-device, open-source dictation — the local alternative to Wispr Flow. My voice never leaves the Mac.</div>
+    </a>
+    <a class="tool" href="https://elevenlabs.io" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">ElevenLabs<span class="arrow">↗</span></span><span class="tcat">Text-to-speech</span></div>
+      <div class="trole">Natural voice synthesis I use to read work back aloud — sharper than the mainstream readers.</div>
+    </a>
+    <a class="tool" href="https://ollama.com" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">Ollama<span class="arrow">↗</span></span><span class="tcat">Local AI</span></div>
+      <div class="trole">LLMs running entirely on my machine — private, free, always on. Powers my own assistant's local layer.</div>
+    </a>
+    <a class="tool" href="https://duckdb.org" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">DuckDB<span class="arrow">↗</span></span><span class="tcat">Data</span></div>
+      <div class="trole">In-process analytics — SQL straight over CSVs, Parquet, and my own databases, no server to run.</div>
+    </a>
+  </div>
+
   <div class="through">
     <div class="rail-inv">The through-line</div>
     <p>The pattern goes back to the start. Early in my career I built a parametric generator that compiled form inputs into a manufacturable 3D model and turned an 8-hour drafting job into about 30 seconds. Every stop since, I've found the system that slows people down and built the fix. <em>I ship, learn, and ship again</em> — faster than most.</p>
@@ -295,6 +363,37 @@
         note.innerHTML = 'Something went wrong. Email me directly at <a href="mailto:hawkesj12@gmail.com">hawkesj12@gmail.com</a>.';
       });
   });
+})();
+</script>
+
+<script>
+(function(){
+  var grid = document.getElementById('bgGrid');
+  if(!grid) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // seeded PRNG (mulberry32) so the tile pattern is stable across reloads, not random each visit
+  function makeRng(seed){ return function(){ seed = seed + 0x6D2B79F5 | 0;
+    var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function build(){
+    var cs = window.getComputedStyle(grid);
+    var CELL = parseFloat(cs.getPropertyValue('--cell')) || 150;
+    var GAP = parseFloat(cs.getPropertyValue('--gap')) || 22;
+    var PITCH = CELL + GAP;
+    var cols = Math.ceil(window.innerWidth / PITCH) + 1;
+    var rows = Math.ceil(window.innerHeight / PITCH) + 1;
+    grid.style.gridTemplateColumns = 'repeat(' + cols + ',' + CELL + 'px)';
+    var n = cols * rows, out = '', rng = makeRng(0x1EAF20);
+    for(var i=0;i<n;i++){
+      var r = rng(), lvl = r<0.50 ? 0 : r<0.72 ? 1 : r<0.87 ? 2 : r<0.96 ? 3 : 4;
+      var delay = reduce ? '' : ' style="animation-delay:' + (Math.random()*1.1).toFixed(2) + 's"';
+      out += '<i class="c' + lvl + '"' + delay + '></i>';
+    }
+    grid.innerHTML = out;
+  }
+  build();
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(build, 200); });
 })();
 </script>
 </body>

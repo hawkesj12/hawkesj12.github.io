@@ -191,11 +191,11 @@
       <h2>Atlas <span class="sub">— a production AI operations platform</span></h2>
       <span class="pill live">Live in production</span>
     </div>
-    <p class="what">A production AI operations platform at my current employer. It runs retrieval over the company's own documents and returns cited answers, ingests source material through a deterministic pipeline, and carries an observability layer — all on Azure with managed identity.</p>
+    <p class="what">A production AI operations platform at my current employer. Its agents retrieve and cite answers from the company's own documents, classify and route incoming work, and draft structured summaries; source material flows in through a deterministic ingestion pipeline. Model calls are cost-tiered — a cheap model handles extraction and classification, escalating to a stronger one only when a task needs it — and the whole system runs on Azure with managed identity and end-to-end tracing.</p>
     <p class="why"><b>Why it matters:</b> I originated the initiative and built it solo — from the architecture through the deployment — and delivered the executive demo. I don't just build it; I run and harden it in production.</p>
     <div class="tags">
       <span class="tag">Python</span><span class="tag">RAG / retrieval</span><span class="tag">React / TypeScript</span>
-      <span class="tag">PostgreSQL · Azure</span><span class="tag">Observability</span>
+      <span class="tag">PostgreSQL · Azure</span><span class="tag">Cost-tiered LLM routing</span><span class="tag">Observability</span>
     </div>
   </article>
 
@@ -207,6 +207,16 @@
     <p class="what">Specialized agents acting as doers under one orchestrator, with scheduled automation, persistent memory, and deterministic multi-agent workflows. Real agentic experience — not a wrapper around a single prompt.</p>
     <p class="why"><b>Why it matters:</b> proof I don't build one thing and stop. I build systems continuously, and I build the tools that build the tools. This is where I push the frontier before it shows up in the work.</p>
     <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h2>Job-Radar <span class="sub">— an applied-AI job-search engine</span></h2>
+      <span class="pill self">Personal R&amp;D</span>
+    </div>
+    <p class="what">A self-growing engine that scans ~500 companies across the public hiring market — multiple ATS platforms and job aggregators, plus a Common Crawl bootstrap — scores every role against a weighted fit model, dedupes across sources, and grows its own target list.</p>
+    <p class="why"><b>Why it matters:</b> I didn't just apply for AI-engineering jobs — I built the AI tooling to run the search. Data engineering, API integration, discovery-at-scale, and AI-driven matching in one system.</p>
+    <div class="tags"><span class="tag">Python</span><span class="tag">Data pipelines</span><span class="tag">Common Crawl</span><span class="tag">Fit-scoring</span></div>
   </article>
 
   <div class="grid2">

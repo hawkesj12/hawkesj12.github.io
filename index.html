@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Justin Hawkes — AI Systems Builder</title>
+<meta name="description" content="Justin Hawkes — AI systems builder. Sixteen years an engineer across multiple industries. I build production AI systems that make real operations measurably smarter, from architecture to deployment.">
+<meta property="og:title" content="Justin Hawkes — AI Systems Builder">
+<meta property="og:description" content="I build production AI systems that make real operations measurably smarter — from architecture to deployment.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='28' y='28' width='44' height='44' rx='8' transform='rotate(45 50 50)' fill='%23B25E2A'/></svg>">
+<style>
+  :root {
+    --paper:#F5F7FA; --card:#FFFFFF; --ink:#161B22; --ink-soft:#3D4653;
+    --muted:#697488; --line:#E1E6ED; --line-soft:#EDF0F5;
+    --accent:#B25E2A; --accent-ink:#9A4E20; --accent-wash:#F6EBE1;
+    --live:#1F8A54; --live-wash:#E3F3EA; --err:#C0392B;
+    --shadow:0 1px 2px rgba(22,27,34,.05),0 8px 24px rgba(22,27,34,.06);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#0F1319;--card:#171C24;--ink:#EEF1F6;--ink-soft:#C3CBD7;--muted:#8B96A6;
+      --line:#242B36;--line-soft:#1E242E;--accent:#DE9152;--accent-ink:#E9A468;--accent-wash:#2A2018;
+      --live:#54C98A;--live-wash:#17271E;--err:#E77A6B;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);}
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.55; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .wrap { max-width:940px; margin:0 auto; padding:44px 28px 72px; }
+
+  /* ---- top bar ---- */
+  .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    flex-wrap:wrap; margin-bottom:48px; }
+  .brand { font-family:var(--mono); font-weight:600; font-size:14px; letter-spacing:.02em;
+    display:flex; align-items:center; gap:9px; }
+  .brand .dot { width:9px; height:9px; border-radius:2px; background:var(--accent);
+    transform:rotate(45deg); }
+  .nav { display:flex; gap:6px; flex-wrap:wrap; }
+  .nav a { font-family:var(--mono); font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    padding:7px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card);
+    transition:border-color .15s, color .15s, transform .15s; }
+  .nav a:hover { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+    transform:translateY(-1px); }
+  .nav a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---- hero ---- */
+  .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-ink); font-weight:600; display:flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:""; width:26px; height:2px; background:var(--accent); }
+  h1 { font-size:clamp(34px,5.4vw,54px); line-height:1.02; margin:18px 0 0; letter-spacing:-.02em;
+    text-wrap:balance; font-weight:700; }
+  .lede { font-size:clamp(17px,2.1vw,20px); color:var(--ink-soft); margin:20px 0 0; max-width:62ch;
+    text-wrap:balance; }
+  .sub-lede { font-size:15.5px; color:var(--muted); margin:14px 0 0; max-width:64ch; }
+
+  /* ---- stats ---- */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:34px 0 8px; }
+  .stat { background:var(--card); padding:18px 20px; }
+  .stat .n { font-family:var(--mono); font-size:clamp(20px,2.8vw,26px); font-weight:600; color:var(--ink);
+    font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .stat .l { font-size:12.5px; color:var(--muted); margin-top:5px; line-height:1.35; }
+
+  .rail { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin:44px 0 14px; display:flex; align-items:center; gap:12px; }
+  .rail::after { content:""; flex:1; height:1px; background:var(--line); }
+
+  /* ---- cards ---- */
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 28px;
+    box-shadow:var(--shadow); margin-bottom:16px; position:relative; }
+  .card.hero { border-color:color-mix(in srgb,var(--accent) 32%,var(--line)); }
+  a.card { text-decoration:none; display:block; transition:transform .15s, border-color .15s, box-shadow .15s; }
+  a.card:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 50%,var(--line));
+    box-shadow:0 2px 4px rgba(22,27,34,.06),0 14px 34px rgba(22,27,34,.10); }
+  a.card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .card-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .card h2 { font-size:clamp(20px,2.6vw,25px); margin:0; letter-spacing:-.015em; font-weight:700; }
+  .card h2 .sub { color:var(--muted); font-weight:500; }
+  .card h2 .arrow { color:var(--accent); font-weight:600; margin-left:4px; }
+  .pill { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .pill.live { background:var(--live-wash); color:var(--live); }
+  .pill.live::before { content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:var(--live); margin-right:6px; vertical-align:middle; }
+  .pill.self { background:var(--accent-wash); color:var(--accent-ink); }
+  .what { margin:14px 0 0; color:var(--ink-soft); max-width:68ch; }
+  .why { margin:14px 0 0; padding-left:15px; border-left:2px solid var(--accent); color:var(--ink); max-width:66ch; }
+  .why b { color:var(--accent-ink); font-weight:600; }
+  .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+  .tag { font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); background:var(--line-soft);
+    border:1px solid var(--line); padding:4px 9px; border-radius:6px; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid2 .card { margin-bottom:0; }
+
+  .through { margin-top:40px; padding:28px 30px; border-radius:14px; background:var(--ink); color:var(--paper); }
+  .through .rail-inv { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:12px; }
+  .through p { margin:0; font-size:clamp(16px,2vw,19px); line-height:1.6; max-width:72ch; }
+  .through p em { color:var(--accent); font-style:normal; font-weight:600; }
+
+  /* ---- contact ---- */
+  .contact { margin-top:40px; text-align:center; }
+  .contact .rail { justify-content:center; }
+  .contact .rail::after, .contact .rail::before { display:none; }
+  .contact h3 { font-size:clamp(22px,3vw,28px); margin:6px 0 6px; letter-spacing:-.015em; }
+  .contact p { color:var(--muted); margin:0 auto 20px; max-width:48ch; }
+  .clinks { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .clinks a { font-family:var(--mono); font-size:13px; text-decoration:none; color:var(--ink);
+    padding:10px 16px; border:1px solid var(--line); border-radius:9px; background:var(--card);
+    transition:border-color .15s,transform .15s,color .15s; }
+  .clinks a.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .clinks a:hover { transform:translateY(-1px); border-color:color-mix(in srgb,var(--accent) 55%,var(--line)); }
+  .clinks a.primary:hover { border-color:var(--accent); color:#fff; }
+  .clinks a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---- contact form ---- */
+  .cform { max-width:520px; margin:24px auto 0; display:flex; flex-direction:column; gap:12px; text-align:left; }
+  .crow { display:flex; gap:12px; }
+  .crow input { flex:1; min-width:0; }
+  .cform input, .cform textarea { width:100%; font-family:var(--sans); font-size:15px; color:var(--ink);
+    background:var(--card); border:1px solid var(--line); border-radius:9px; padding:12px 14px;
+    transition:border-color .15s,box-shadow .15s; resize:vertical; }
+  .cform input::placeholder, .cform textarea::placeholder { color:var(--muted); }
+  .cform input:focus, .cform textarea:focus { outline:none; border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent); }
+  .csubmit { font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:.02em; color:#fff;
+    background:var(--accent); border:1px solid var(--accent); padding:12px 18px; border-radius:9px;
+    cursor:pointer; transition:transform .15s,opacity .15s; }
+  .csubmit:hover:not(:disabled) { transform:translateY(-1px); }
+  .csubmit:disabled { opacity:.7; cursor:default; }
+  .csubmit:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .cform .cnote { font-size:14px; margin:2px 0 0; min-height:1.1em; text-align:center; max-width:none; }
+  .cform .cnote.ok { color:var(--live); }
+  .cform .cnote.err { color:var(--err); }
+
+  .fineprint { margin-top:44px; padding-top:18px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:12px; color:var(--muted); display:flex;
+    justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:720px){ .stats{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
+    .wrap{padding:32px 20px 56px;} }
+  @media (max-width:520px){ .crow{ flex-direction:column; } }
+  @media (prefers-reduced-motion: no-preference){
+    h1,.lede,.stats,.card,.through,.contact{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
+    @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span>JUSTIN HAWKES</div>
+    <nav class="nav">
+      <a href="https://github.com/hawkesj12" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/justin-hawkes" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:hawkesj12@gmail.com">Email</a>
+    </nav>
+  </div>
+
+  <header>
+    <div class="eyebrow">AI Systems Builder</div>
+    <h1>I build production AI systems that make real operations measurably smarter.</h1>
+    <p class="lede">From architecture to deployment. Sixteen years an engineer across multiple industries — I find the system that slows people down, and I build the fix.</p>
+    <p class="sub-lede">For most of that time I've worked inside real operations, teaching myself to build the tools the job needed, then the AI systems that do it better: AutoCAD and VBA, then Excel and Power Platform, then Python, now AI and LLMs. Which means I've been the actual user of the systems these tools are meant to improve.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="n">16 yrs</div><div class="l">engineer · multiple industries</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">production AI systems built solo</div></div>
+    <div class="stat"><div class="n">~112K</div><div class="l">lines of source shipped</div></div>
+    <div class="stat"><div class="n">Open</div><div class="l">where the impact is seen</div></div>
+  </div>
+
+  <div class="rail">What I've built</div>
+
+  <article class="card hero">
+    <div class="card-head">
+      <h2>Atlas <span class="sub">— a production AI operations platform</span></h2>
+      <span class="pill live">Live in production</span>
+    </div>
+    <p class="what">A production AI operations platform at my current employer. It runs retrieval over the company's own documents and returns cited answers, ingests source material through a deterministic pipeline, and carries an observability layer — all on Azure with managed identity.</p>
+    <p class="why"><b>Why it matters:</b> I originated the initiative and built it solo — from the architecture through the deployment — and delivered the executive demo. I don't just build it; I run and harden it in production.</p>
+    <div class="tags">
+      <span class="tag">Python</span><span class="tag">RAG / retrieval</span><span class="tag">React / TypeScript</span>
+      <span class="tag">PostgreSQL · Azure</span><span class="tag">Observability</span>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h2>Nova <span class="sub">— my own multi-agent assistant</span></h2>
+      <span class="pill self">Personal R&amp;D</span>
+    </div>
+    <p class="what">Specialized agents acting as doers under one orchestrator, with scheduled automation, persistent memory, and deterministic multi-agent workflows. Real agentic experience — not a wrapper around a single prompt.</p>
+    <p class="why"><b>Why it matters:</b> proof I don't build one thing and stop. I build systems continuously, and I build the tools that build the tools. This is where I push the frontier before it shows up in the work.</p>
+    <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
+  </article>
+
+  <div class="grid2">
+    <a class="card" href="https://github.com/hawkesj12/repolens" target="_blank" rel="noopener">
+      <div class="card-head"><h2>RepoLens <span class="arrow">↗</span></h2><span class="pill self">Open source</span></div>
+      <p class="what">A portable, zero-install tool that makes any AI-assisted codebase searchable and self-checking: a ranked find-index plus a typed corpus linter, config-driven and standard-library only.</p>
+      <p class="why"><b>Why it matters:</b> my first original open-source tool — designed from scratch, run through three adversarial reviews, with everything that didn't earn its place cut.</p>
+      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">SQLite FTS5</span><span class="tag">View on GitHub</span></div>
+    </a>
+
+    <article class="card">
+      <div class="card-head"><h2>Mesh</h2><span class="pill self">Hardware + firmware</span></div>
+      <p class="what">A rural Meshtastic LoRa mesh network — long-range, solar-friendly radio comms that keep working with no internet and no cell signal.</p>
+      <p class="why"><b>Why it matters:</b> systems thinking past pure software — hardware, firmware, and resilience.</p>
+      <div class="tags"><span class="tag">Meshtastic</span><span class="tag">LoRa</span><span class="tag">embedded</span></div>
+    </article>
+  </div>
+
+  <div class="through">
+    <div class="rail-inv">The through-line</div>
+    <p>The pattern goes back to the start. Early in my career I built a parametric generator that compiled form inputs into a manufacturable 3D model and turned an 8-hour drafting job into about 30 seconds. Every stop since, I've found the system that slows people down and built the fix. <em>I ship, learn, and ship again</em> — faster than most.</p>
+  </div>
+
+  <div class="contact">
+    <div class="rail">Get in touch</div>
+    <h3>Let's build something that makes the work smarter.</h3>
+    <p>Open to Forward-Deployed and AI-engineering roles where the impact is real and seen. Drop me a line — I read every message.</p>
+    <div class="clinks">
+      <a class="primary" href="mailto:hawkesj12@gmail.com">Email me</a>
+      <a href="tel:+15023774544">Call / text</a>
+      <a href="https://github.com/hawkesj12" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/justin-hawkes" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+
+    <form class="cform" id="cform" action="https://formsubmit.co/ajax/hawkesj12@gmail.com" method="POST">
+      <div class="crow">
+        <input type="text" name="name" placeholder="Your name" required autocomplete="name" aria-label="Your name">
+        <input type="email" name="email" placeholder="Your email" required autocomplete="email" aria-label="Your email">
+      </div>
+      <textarea name="message" rows="4" placeholder="What's on your mind?" required aria-label="Your message"></textarea>
+      <input type="hidden" name="_subject" value="New message from your portfolio site">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+      <button type="submit" class="csubmit">Send message</button>
+      <p class="cnote" id="cnote" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+
+  <div class="fineprint">
+    <span>Justin Hawkes · AI Systems Builder</span>
+    <span>Louisville, KY · Remote</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var f = document.getElementById('cform'), note = document.getElementById('cnote');
+  if (!f) return;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = f.querySelector('.csubmit');
+    note.className = 'cnote'; note.textContent = '';
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch(f.action, { method:'POST', headers:{ 'Accept':'application/json' }, body:new FormData(f) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.success === 'true' || d.success === true) {
+          f.reset(); btn.textContent = 'Sent ✓';
+          note.className = 'cnote ok';
+          note.textContent = "Thanks — that's on its way to my inbox. I'll get back to you soon.";
+        } else { throw new Error(d.message || 'failed'); }
+      })
+      .catch(function(){
+        btn.disabled = false; btn.textContent = 'Send message';
+        note.className = 'cnote err';
+        note.innerHTML = 'Something went wrong. Email me directly at <a href="mailto:hawkesj12@gmail.com">hawkesj12@gmail.com</a>.';
+      });
+  });
+})();
+</script>
+</body>
+</html>

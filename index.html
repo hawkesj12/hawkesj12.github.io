@@ -104,6 +104,19 @@
 
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   .grid2 .card { margin-bottom:0; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:16px; }
+  .grid3 .card { margin-bottom:0; }
+
+  /* inline card links + nested engine block */
+  a.inl { text-decoration:none; }
+  a.inl:hover { color:var(--accent-ink); }
+  .engine { margin-top:20px; padding:16px 18px; border:1px solid var(--line); border-radius:11px;
+    background:var(--line-soft); }
+  .engine .elabel { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; }
+  .engine h3 { font-size:18px; margin:8px 0; letter-spacing:-.015em; font-weight:700; }
+  .engine h3 .arrow { color:var(--accent); font-weight:600; }
+  .engine p { margin:0; color:var(--ink-soft); font-size:14.5px; max-width:70ch; }
 
   .through { margin-top:40px; padding:28px 30px; border-radius:14px; background:var(--ink); color:var(--paper); }
   .through .rail-inv { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
@@ -195,7 +208,7 @@
 
   <div class="stats">
     <div class="stat"><div class="n">16 yrs</div><div class="l">engineer · multiple industries</div></div>
-    <div class="stat"><div class="n">2</div><div class="l">production AI systems built solo</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">live AI systems built solo</div></div>
     <div class="stat"><div class="n">~112K</div><div class="l">lines of source shipped</div></div>
     <div class="stat"><div class="n">Open</div><div class="l">where the impact is seen</div></div>
   </div>
@@ -225,22 +238,36 @@
     <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
   </article>
 
-  <a class="card" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">
+  <article class="card">
     <div class="card-head">
-      <h2>Job-Radar <span class="arrow">↗</span> <span class="sub">— an applied-AI job-search engine</span></h2>
-      <span class="pill self">Open source</span>
+      <h2><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">jobfitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h2>
+      <span class="pill live">Live</span>
     </div>
-    <p class="what">A self-growing engine that scans ~500 companies across the public hiring market — multiple ATS platforms and job aggregators, plus a Common Crawl bootstrap — scores every role against a weighted fit model, dedupes across sources, and (optionally) semantically re-ranks with an LLM. Config-driven and pip-installable, so anyone can point it at their own search.</p>
-    <p class="why"><b>Why it matters:</b> I didn't just apply for AI-engineering jobs — I built the AI tooling to run the search, then open-sourced it. Data engineering, API integration, discovery-at-scale, and AI-driven matching in one system, shipped through three adversarial reviews.</p>
-    <div class="tags"><span class="tag">Python</span><span class="tag">Data pipelines</span><span class="tag">Common Crawl</span><span class="tag">LLM re-rank</span><span class="tag">View on GitHub</span></div>
-  </a>
+    <p class="what">Answer a few questions and get a fit-scored, clickable, direct-to-company job list. A scheduled harvest caches the whole hiring market into a snapshot, so every visitor's search scores that cache with zero external calls per request — visitors stay decoupled from job-board rate limits.</p>
+    <p class="why"><b>Why it matters:</b> I didn't just build a tool — I shipped the live product on my own VPS and run it in production at <b>jobfitr.app</b>. Full-stack ownership, deploy included: a product a stranger can actually use.</p>
 
-  <div class="grid2">
+    <div class="engine">
+      <div class="elabel">The engine underneath — open source</div>
+      <h3><a class="inl" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">Job-Radar <span class="arrow">↗</span></a></h3>
+      <p>The harvesting-and-scoring engine I built and open-sourced first, then built jobfitr on top of. It scans ~500 companies across ATS platforms and aggregators, bootstraps from Common Crawl, scores every role against a weighted fit model, dedupes across sources, and optionally re-ranks with an LLM — config-driven and pip-installable, shipped through three adversarial reviews.</p>
+    </div>
+
+    <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite · FTS5</span><span class="tag">Common Crawl</span><span class="tag">LLM re-rank</span><span class="tag">Cached harvest</span><span class="tag">Self-hosted VPS</span></div>
+  </article>
+
+  <div class="grid3">
     <a class="card" href="https://github.com/hawkesj12/repolens" target="_blank" rel="noopener">
       <div class="card-head"><h2>RepoLens <span class="arrow">↗</span></h2><span class="pill self">Open source</span></div>
       <p class="what">A portable, zero-install tool that makes any AI-assisted codebase searchable and self-checking: a ranked find-index plus a typed corpus linter, config-driven and standard-library only.</p>
       <p class="why"><b>Why it matters:</b> my first original open-source tool — designed from scratch, run through three adversarial reviews, with everything that didn't earn its place cut.</p>
       <div class="tags"><span class="tag">Python stdlib</span><span class="tag">SQLite FTS5</span><span class="tag">View on GitHub</span></div>
+    </a>
+
+    <a class="card" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
+      <div class="card-head"><h2>Revline <span class="arrow">↗</span></h2><span class="pill self">Open source</span></div>
+      <p class="what">A rich, single-file status line for Claude Code — model, cost, git state, and a live token-throughput tachometer, right in the terminal footer. Zero dependencies, drops in with three lines of config.</p>
+      <p class="why"><b>Why it matters:</b> a polished dev tool other builders can drop in — one readable Python file, no dependencies, with the small delightful touches (a green-to-red throughput gauge, live layout toggle) that separate a script from a product.</p>
+      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">Claude Code</span><span class="tag">View on GitHub</span></div>
     </a>
 
     <article class="card">
@@ -252,20 +279,24 @@
   </div>
 
   <div class="rail">How I work</div>
-  <p class="tools-lede">Part of how one person ships this much: I work at the edge of the tooling, and I pick the sharp tool over the default — often the local, open, or indie one. Knowing which tools are actually worth adopting is its own kind of engineering judgment. These are the ones I reach for every day, built by other builders.</p>
+  <p class="tools-lede">Part of how one person ships this much: I work at the edge of the tooling, and I pick the sharp tool over the default — often the local, open, or indie one. Knowing which tools are actually worth adopting is its own kind of engineering judgment. These are the ones I reach for every day — mostly built by other builders, and one (Revline) I built myself.</p>
 
   <div class="toolgrid">
     <a class="tool" href="https://claude.com/product/claude-code" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Claude Code<span class="arrow">↗</span></span><span class="tcat">Build</span></div>
       <div class="trole">My primary build surface — agentic, multi-file, terminal-native. Where I actually ship.</div>
     </a>
+    <a class="tool" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">Revline<span class="arrow">↗</span></span><span class="tcat">Statusline</span></div>
+      <div class="trole">My own status line for Claude Code — model, cost, git, and a live token-throughput tachometer in the footer. The one tool here I built myself.</div>
+    </a>
     <a class="tool" href="https://tryvoiceink.com/" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">VoiceInk<span class="arrow">↗</span></span><span class="tcat">Dictation</span></div>
       <div class="trole">On-device, open-source dictation — the local alternative to Wispr Flow. My voice never leaves the Mac.</div>
     </a>
-    <a class="tool" href="https://elevenlabs.io" target="_blank" rel="noopener">
-      <div class="thead"><span class="tname">ElevenLabs<span class="arrow">↗</span></span><span class="tcat">Text-to-speech</span></div>
-      <div class="trole">Natural voice synthesis I use to read work back aloud — sharper than the mainstream readers.</div>
+    <a class="tool" href="https://speakeleven.com/" target="_blank" rel="noopener">
+      <div class="thead"><span class="tname">Speak11<span class="arrow">↗</span></span><span class="tcat">Text-to-speech</span></div>
+      <div class="trole">A macOS menu-bar reader running Kokoro TTS on-device — local voice, no cloud, no credits. I use it to hear work read back.</div>
     </a>
     <a class="tool" href="https://ollama.com" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Ollama<span class="arrow">↗</span></span><span class="tcat">Local AI</span></div>

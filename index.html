@@ -240,16 +240,16 @@
 
   <article class="card">
     <div class="card-head">
-      <h2><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">jobfitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h2>
+      <h2><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">JobFitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h2>
       <span class="pill live">Live</span>
     </div>
-    <p class="what">Answer a few questions and get a fit-scored, clickable, direct-to-company job list. A scheduled harvest caches the whole hiring market into a snapshot, so every visitor's search scores that cache with zero external calls per request — visitors stay decoupled from job-board rate limits.</p>
-    <p class="why"><b>Why it matters:</b> I didn't just build a tool — I shipped the live product on my own VPS and run it in production at <b>jobfitr.app</b>. Full-stack ownership, deploy included: a product a stranger can actually use.</p>
+    <p class="what">Answer a few questions and get a fit-scored, clickable, direct-to-company job list — all running on <b>Job-Radar, the open-source engine I built</b> (below). A scheduled harvest caches the whole hiring market into a snapshot, so every visitor's search scores that cache with zero external calls per request — visitors stay decoupled from job-board rate limits.</p>
+    <p class="why"><b>Why it matters:</b> I built the engine first, then shipped the live product on top of it — on my own VPS, running in production at <b>jobfitr.app</b>. Full-stack ownership from the engine to the deploy: a product a stranger can actually use.</p>
 
     <div class="engine">
-      <div class="elabel">The engine underneath — open source</div>
+      <div class="elabel">Powered by my own engine — open source</div>
       <h3><a class="inl" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">Job-Radar <span class="arrow">↗</span></a></h3>
-      <p>The harvesting-and-scoring engine I built and open-sourced first, then built jobfitr on top of. It scans ~500 companies across ATS platforms and aggregators, bootstraps from Common Crawl, scores every role against a weighted fit model, dedupes across sources, and optionally re-ranks with an LLM — config-driven and pip-installable, shipped through three adversarial reviews.</p>
+      <p>JobFitr runs on Job-Radar — the harvesting-and-scoring engine I built and open-sourced first, then built the app on top of. It scans ~500 companies across ATS platforms and aggregators, bootstraps from Common Crawl, scores every role against a weighted fit model, dedupes across sources, and optionally re-ranks with an LLM — config-driven and pip-installable, shipped through three adversarial reviews.</p>
     </div>
 
     <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite · FTS5</span><span class="tag">Common Crawl</span><span class="tag">LLM re-rank</span><span class="tag">Cached harvest</span><span class="tag">Self-hosted VPS</span></div>

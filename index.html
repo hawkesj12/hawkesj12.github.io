@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Justin Hawkes — AI Systems Builder</title>
-<meta name="description" content="Justin Hawkes — AI systems builder. Sixteen years an engineer across multiple industries. I build production AI systems that make real operations measurably smarter, from architecture to deployment.">
+<meta name="description" content="Justin Hawkes — AI systems builder. In AI, context is everything, and building it is what I do best. Sixteen years an engineer; I engineer the data and knowledge that production AI runs on.">
 <meta property="og:title" content="Justin Hawkes — AI Systems Builder">
-<meta property="og:description" content="I build production AI systems that make real operations measurably smarter — from architecture to deployment.">
+<meta property="og:description" content="In AI, context is everything, and building it is what I do best. I engineer the data and knowledge that production AI runs on.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://justinhawkes.dev/">
 <meta property="og:image" content="https://justinhawkes.dev/og.png">
@@ -14,22 +14,22 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Justin Hawkes — AI Systems Builder">
-<meta name="twitter:description" content="I build production AI systems that make real operations measurably smarter — from architecture to deployment.">
+<meta name="twitter:description" content="In AI, context is everything, and building it is what I do best. I engineer the data and knowledge that production AI runs on.">
 <meta name="twitter:image" content="https://justinhawkes.dev/og.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='28' y='28' width='44' height='44' rx='8' transform='rotate(45 50 50)' fill='%23B25E2A'/></svg>">
 <style>
   :root {
     --paper:#F5F7FA; --card:#FFFFFF; --ink:#161B22; --ink-soft:#3D4653;
-    --muted:#697488; --line:#E1E6ED; --line-soft:#EDF0F5;
-    --accent:#B25E2A; --accent-ink:#9A4E20; --accent-wash:#F6EBE1;
-    --live:#1F8A54; --live-wash:#E3F3EA; --err:#C0392B;
+    --muted:#5B6675; --line:#E1E6ED; --line-soft:#EDF0F5;
+    --accent:#B25E2A; --accent-ink:#9A4E20; --accent-wash:#F6EBE1; --on-accent:#fff;
+    --live:#15784A; --live-wash:#E3F3EA; --err:#C0392B;
     --shadow:0 1px 2px rgba(22,27,34,.05),0 8px 24px rgba(22,27,34,.06);
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   @media (prefers-color-scheme: dark){
     :root{--paper:#0F1319;--card:#171C24;--ink:#EEF1F6;--ink-soft:#C3CBD7;--muted:#8B96A6;
-      --line:#242B36;--line-soft:#1E242E;--accent:#DE9152;--accent-ink:#E9A468;--accent-wash:#2A2018;
+      --line:#242B36;--line-soft:#1E242E;--accent:#DE9152;--accent-ink:#E9A468;--accent-wash:#2A2018;--on-accent:#241A12;
       --live:#54C98A;--live-wash:#17271E;--err:#E77A6B;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);}
   }
 
@@ -40,9 +40,28 @@
   a { color:inherit; }
   .wrap { max-width:940px; margin:0 auto; padding:44px 28px 72px; }
 
+  /* a11y utilities */
+  .vh { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  .skip { position:absolute; left:-9999px; top:0; z-index:20; background:var(--accent);
+    color:var(--on-accent); font-family:var(--mono); font-size:13px; padding:10px 16px;
+    border-radius:0 0 8px 0; }
+  .skip:focus { left:0; }
+
   /* ---- top bar ---- */
   .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px;
     flex-wrap:wrap; margin-bottom:48px; }
+
+  /* copy-for-AI — hand the reader clean context (ties to the "context is everything" headline) */
+  .ctxlink { display:inline-flex; align-items:center; gap:7px; margin-top:18px;
+    font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:.01em;
+    color:var(--accent-ink); background:none; border:0; padding:0 0 2px; cursor:pointer;
+    border-bottom:1px solid color-mix(in srgb,var(--accent) 42%,transparent);
+    transition:color .15s, border-color .15s; }
+  .ctxlink:hover { border-color:var(--accent); }
+  .ctxlink:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+  .ctxlink .ci { width:14px; height:14px; flex-shrink:0; }
+  .ctxlink.done { color:var(--live); border-color:var(--live); }
   .brand { font-family:var(--mono); font-weight:600; font-size:14px; letter-spacing:.02em;
     display:flex; align-items:center; gap:9px; }
   .brand .dot { width:9px; height:9px; border-radius:2px; background:var(--accent);
@@ -65,6 +84,45 @@
     text-wrap:balance; }
   .sub-lede { font-size:15.5px; color:var(--muted); margin:14px 0 0; max-width:64ch; }
 
+  /* ---- hero portrait split (headline full-width, lede + photo share the row) ---- */
+  .hero-split { display:flex; gap:36px; align-items:center; margin-top:22px; }
+  .hero-copy { flex:1; min-width:0; }
+  .hero-copy .lede { margin-top:0; }
+  .portrait { width:410px; max-width:44%; height:auto; flex-shrink:0; border-radius:14px;
+    border:1px solid var(--line); box-shadow:var(--shadow); }
+  @media (max-width:760px){
+    .hero-split { flex-direction:column; align-items:stretch; gap:22px; }
+    .portrait { width:100%; max-width:100%; }
+  }
+
+  /* ---- context pipeline (the stack I build to connect data to the model) ---- */
+  .ctxflow { margin:32px 0 8px; }
+  .ctxflow-cap { font-family:var(--mono); font-size:12px; letter-spacing:.02em; color:var(--muted);
+    margin-bottom:13px; }
+  .ctxflow-cap b { color:var(--accent-ink); font-weight:600; }
+  .ctxflow-steps { list-style:none; margin:0; padding:3px 2px 6px; display:flex; gap:19px;
+    overflow-x:auto; scrollbar-width:thin; }
+  .ctxflow-steps li { position:relative; flex:0 0 auto; display:flex; flex-direction:column; gap:2px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:8px 11px;
+    box-shadow:var(--shadow); }
+  .ctxflow-steps li:not(:last-child)::after { content:"→"; position:absolute; right:-14px; top:50%;
+    transform:translateY(-50%); color:var(--accent); font-family:var(--mono); font-size:13px; font-weight:600; }
+  .cs-n { font-weight:600; font-size:13px; color:var(--ink); letter-spacing:-.01em; white-space:nowrap; }
+  .cs-t { font-family:var(--mono); font-size:9.5px; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.05em; white-space:nowrap; }
+
+  /* ---- architecture diagram (sanitized shape only — no internals) ---- */
+  .archfig { margin:22px 0 2px; }
+  .archcap { font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-bottom:10px; }
+  .dg { width:100%; height:auto; display:block; }
+  .dg-box { fill:var(--card); stroke:var(--line); stroke-width:1.5; }
+  .dg-box.ai { fill:var(--line-soft); stroke:color-mix(in srgb,var(--accent) 34%,var(--line)); }
+  .dg-t { fill:var(--ink); font-family:var(--sans); font-size:14px; font-weight:600; }
+  .dg-s { fill:var(--muted); font-family:var(--mono); font-size:11px; }
+  .dg-gov { fill:var(--accent-ink); font-family:var(--mono); font-size:11.5px; font-weight:600; }
+  .dg-arrow { stroke:var(--accent); stroke-width:2; fill:none; }
+  .dg-ah { fill:var(--accent); }
+
   /* ---- stats ---- */
   .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
     border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:34px 0 8px; }
@@ -86,9 +144,9 @@
     box-shadow:0 2px 4px rgba(22,27,34,.06),0 14px 34px rgba(22,27,34,.10); }
   a.card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
   .card-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
-  .card h2 { font-size:clamp(20px,2.6vw,25px); margin:0; letter-spacing:-.015em; font-weight:700; }
-  .card h2 .sub { color:var(--muted); font-weight:500; }
-  .card h2 .arrow { color:var(--accent); font-weight:600; margin-left:4px; }
+  .card h3 { font-size:clamp(20px,2.6vw,25px); margin:0; letter-spacing:-.015em; font-weight:700; }
+  .card h3 .sub { color:var(--muted); font-weight:500; }
+  .card h3 .arrow { color:var(--accent); font-weight:600; margin-left:4px; }
   .pill { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.06em;
     text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; }
   .pill.live { background:var(--live-wash); color:var(--live); }
@@ -98,6 +156,14 @@
   .what { margin:14px 0 0; color:var(--ink-soft); max-width:68ch; }
   .why { margin:14px 0 0; padding-left:15px; border-left:2px solid var(--accent); color:var(--ink); max-width:66ch; }
   .why b { color:var(--accent-ink); font-weight:600; }
+  /* verifiable-proof line — the "you can check this yourself" row */
+  .verify { margin:14px 0 0; font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+  .verify::before { content:"✓"; color:var(--live); font-weight:700; }
+  .verify code { background:var(--line-soft); border:1px solid var(--line); border-radius:5px;
+    padding:2px 7px; color:var(--ink-soft); font-size:12px; }
+  .verify a { color:var(--accent-ink); }
+
   .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
   .tag { font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); background:var(--line-soft);
     border:1px solid var(--line); padding:4px 9px; border-radius:6px; }
@@ -114,8 +180,8 @@
     background:var(--line-soft); }
   .engine .elabel { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
     color:var(--muted); font-weight:600; }
-  .engine h3 { font-size:18px; margin:8px 0; letter-spacing:-.015em; font-weight:700; }
-  .engine h3 .arrow { color:var(--accent); font-weight:600; }
+  .engine h4 { font-size:18px; margin:8px 0; letter-spacing:-.015em; font-weight:700; }
+  .engine h4 .arrow { color:var(--accent); font-weight:600; }
   .engine p { margin:0; color:var(--ink-soft); font-size:14.5px; max-width:70ch; }
 
   .through { margin-top:40px; padding:28px 30px; border-radius:14px; background:var(--ink); color:var(--paper); }
@@ -150,9 +216,9 @@
   .clinks a { font-family:var(--mono); font-size:13px; text-decoration:none; color:var(--ink);
     padding:10px 16px; border:1px solid var(--line); border-radius:9px; background:var(--card);
     transition:border-color .15s,transform .15s,color .15s; }
-  .clinks a.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .clinks a.primary { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
   .clinks a:hover { transform:translateY(-1px); border-color:color-mix(in srgb,var(--accent) 55%,var(--line)); }
-  .clinks a.primary:hover { border-color:var(--accent); color:#fff; }
+  .clinks a.primary:hover { border-color:var(--accent); color:var(--on-accent); }
   .clinks a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
 
   /* ---- contact form ---- */
@@ -165,7 +231,7 @@
   .cform input::placeholder, .cform textarea::placeholder { color:var(--muted); }
   .cform input:focus, .cform textarea:focus { outline:none; border-color:var(--accent);
     box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent); }
-  .csubmit { font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:.02em; color:#fff;
+  .csubmit { font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--on-accent);
     background:var(--accent); border:1px solid var(--accent); padding:12px 18px; border-radius:9px;
     cursor:pointer; transition:transform .15s,opacity .15s; }
   .csubmit:hover:not(:disabled) { transform:translateY(-1px); }
@@ -189,6 +255,7 @@
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <div class="wrap">
   <div class="topbar">
     <div class="brand"><span class="dot"></span>JUSTIN HAWKES</div>
@@ -199,124 +266,218 @@
     </nav>
   </div>
 
+  <main id="main">
   <header>
     <div class="eyebrow">AI Systems Builder</div>
-    <h1>I build production AI systems that make real operations measurably smarter.</h1>
-    <p class="lede">From architecture to deployment. Sixteen years an engineer across multiple industries — I find the system that slows people down, and I build the fix.</p>
-    <p class="sub-lede">For most of that time I've worked inside real operations, teaching myself to build the tools the job needed, then the AI systems that do it better: AutoCAD and VBA, then Excel and Power Platform, then Python, now AI and LLMs. Which means I've been the actual user of the systems these tools are meant to improve.</p>
+    <h1>In AI, context is everything. Building it is what I do best.</h1>
+    <button class="ctxlink" id="copyMd" type="button" aria-label="Copy this page as Markdown context, ready to paste into any AI assistant">
+      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span class="clabel">Copy this page as context for your AI</span>
+    </button>
+    <div class="hero-split">
+      <div class="hero-copy">
+        <p class="lede">A model is only as good as what you put in front of it: your data, your operations, the knowledge your team already has. That's the part I've spent sixteen years learning from the inside, and the part I now engineer into production AI a business can trust.</p>
+        <p class="sub-lede">This is the whole path I build, from your raw data to an answer the model can be trusted on.</p>
+      </div>
+      <img class="portrait" src="portrait.jpg" width="720" height="479" alt="Justin Hawkes, a mirror self-portrait holding a Leica camera against a mosaic-tiled wall" loading="eager">
+    </div>
   </header>
+
+  <section class="ctxflow" aria-label="The pipeline I build to connect data to the model">
+    <div class="ctxflow-cap"><b>Context → model.</b> Every stage of it, I've built in production:</div>
+    <ol class="ctxflow-steps">
+      <li><span class="cs-n">Sources</span><span class="cs-t">docs · DBs · APIs</span></li>
+      <li><span class="cs-n">Ingest</span><span class="cs-t">pipelines</span></li>
+      <li><span class="cs-n">Extract</span><span class="cs-t">structured data</span></li>
+      <li><span class="cs-n">Chunk + embed</span><span class="cs-t">vectors</span></li>
+      <li><span class="cs-n">Retrieve</span><span class="cs-t">hybrid search</span></li>
+      <li><span class="cs-n">Agents</span><span class="cs-t">orchestration</span></li>
+    </ol>
+  </section>
 
   <div class="stats">
     <div class="stat"><div class="n">16 yrs</div><div class="l">engineer · multiple industries</div></div>
-    <div class="stat"><div class="n">3</div><div class="l">live AI systems built solo</div></div>
-    <div class="stat"><div class="n">~112K</div><div class="l">lines of source shipped</div></div>
-    <div class="stat"><div class="n">Open</div><div class="l">where the impact is seen</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">AI platform, built end to end</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">open-source tools published</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">on PyPI · installable today</div></div>
   </div>
 
-  <div class="rail">What I've built</div>
+  <h2 class="rail">What I've built</h2>
 
   <article class="card hero">
     <div class="card-head">
-      <h2>Atlas <span class="sub">— a production AI operations platform</span></h2>
-      <span class="pill live">Live in production</span>
+      <h3>Atlas <span class="sub">— a production AI operations platform</span></h3>
+      <span class="pill live">Going to production</span>
     </div>
-    <p class="what">A production AI operations platform at my current employer. Its agents retrieve and cite answers from the company's own documents, classify and route incoming work, and draft structured summaries; source material flows in through a deterministic ingestion pipeline. Model calls are cost-tiered — a cheap model handles extraction and classification, escalating to a stronger one only when a task needs it — and the whole system runs on Azure with managed identity and end-to-end tracing.</p>
-    <p class="why"><b>Why it matters:</b> I originated the initiative and built it solo — from the architecture through the deployment — and delivered the executive demo. I don't just build it; I run and harden it in production.</p>
+    <p class="what">Atlas is the AI operations platform I built for my employer's warehouse-automation division. Winning a job used to mean chasing spreadsheets, shared folders, and email threads. Atlas brings all of it into one place: the opportunity, the site photos, the estimate, the vendor quotes, the proposal, and the milestones, on a dashboard the team can slice.</p>
+
+    <p class="what">Claude works inside it: answering questions from the team's own records, reading incoming customer documents and pulling out the numbers people used to retype by hand, and researching accounts overnight. It's <b>44 tables and 205 API routes</b> behind a React front end, and it runs as one app against one database. No microservices, no queues, no containers.</p>
+
+    <p class="why"><b>Why it matters:</b> it replaces a stack of disconnected tools with one platform on one workflow, so the team moves faster, gets it right more often, and can finally see the whole picture. I originated it, built it solo from architecture through deployment, demoed it to the company president, and it's on its way to production.</p>
+
+    <figure class="archfig">
+      <figcaption class="archcap">How it fits together — the shape of the system, simplified.</figcaption>
+      <svg class="dg" viewBox="0 0 640 500" role="img" aria-label="Atlas architecture: single sign-on to a React app, through a FastAPI layer, into a document-ingestion pipeline and a chat-and-agents surface, both writing to Postgres and Blob storage, deployed on Azure with a manual production swap.">
+        <defs>
+          <marker id="dgah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" class="dg-ah"/></marker>
+        </defs>
+        <!-- identity -->
+        <rect class="dg-box" x="150" y="12" width="340" height="42" rx="9"/>
+        <text class="dg-t" x="320" y="38" text-anchor="middle">Team browsers · single sign-on (JWT)</text>
+        <line class="dg-arrow" x1="320" y1="54" x2="320" y2="72" marker-end="url(#dgah)"/>
+        <!-- spa -->
+        <rect class="dg-box" x="185" y="74" width="270" height="42" rx="9"/>
+        <text class="dg-t" x="320" y="100" text-anchor="middle">React single-page app</text>
+        <line class="dg-arrow" x1="320" y1="116" x2="320" y2="134" marker-end="url(#dgah)"/>
+        <!-- api -->
+        <rect class="dg-box" x="118" y="136" width="404" height="54" rx="9"/>
+        <text class="dg-t" x="320" y="160" text-anchor="middle">FastAPI API layer</text>
+        <text class="dg-s" x="320" y="179" text-anchor="middle">auth · security headers · request tracing</text>
+        <line class="dg-arrow" x1="300" y1="192" x2="180" y2="206" marker-end="url(#dgah)"/>
+        <line class="dg-arrow" x1="340" y1="192" x2="460" y2="206" marker-end="url(#dgah)"/>
+        <!-- ingestion -->
+        <rect class="dg-box ai" x="40" y="208" width="272" height="114" rx="9"/>
+        <text class="dg-t" x="176" y="232" text-anchor="middle">Document ingestion</text>
+        <text class="dg-s" x="176" y="253" text-anchor="middle">triage · convert · classify · propose</text>
+        <text class="dg-s" x="176" y="271" text-anchor="middle">a person accepts before anything is saved</text>
+        <text class="dg-gov" x="176" y="301" text-anchor="middle">AI proposes, humans dispose</text>
+        <!-- chat/agents -->
+        <rect class="dg-box ai" x="328" y="208" width="272" height="114" rx="9"/>
+        <text class="dg-t" x="464" y="232" text-anchor="middle">Chat &amp; agents</text>
+        <text class="dg-s" x="464" y="253" text-anchor="middle">retrieval-grounded answers · tools</text>
+        <text class="dg-s" x="464" y="271" text-anchor="middle">propose-confirm writes</text>
+        <text class="dg-gov" x="464" y="301" text-anchor="middle">every call cost-traced</text>
+        <line class="dg-arrow" x1="176" y1="322" x2="270" y2="344" marker-end="url(#dgah)"/>
+        <line class="dg-arrow" x1="464" y1="322" x2="370" y2="344" marker-end="url(#dgah)"/>
+        <!-- data -->
+        <rect class="dg-box" x="118" y="346" width="404" height="54" rx="9"/>
+        <text class="dg-t" x="320" y="370" text-anchor="middle">PostgreSQL — business records</text>
+        <text class="dg-s" x="320" y="389" text-anchor="middle">Blob storage — documents &amp; photos</text>
+        <line class="dg-arrow" x1="320" y1="402" x2="320" y2="420" marker-end="url(#dgah)"/>
+        <!-- deploy -->
+        <rect class="dg-box" x="150" y="422" width="340" height="50" rx="9"/>
+        <text class="dg-t" x="320" y="445" text-anchor="middle">Azure · staged deploy</text>
+        <text class="dg-s" x="320" y="463" text-anchor="middle">manual production swap · zero-downtime</text>
+      </svg>
+    </figure>
+
     <div class="tags">
-      <span class="tag">Python</span><span class="tag">RAG / retrieval</span><span class="tag">React / TypeScript</span>
-      <span class="tag">PostgreSQL · Azure</span><span class="tag">Cost-tiered LLM routing</span><span class="tag">Observability</span>
+      <span class="tag">Python · FastAPI</span><span class="tag">RAG / retrieval</span><span class="tag">React 19 / TypeScript</span>
+      <span class="tag">PostgreSQL · Azure</span><span class="tag">Cost-tiered LLM routing</span><span class="tag">Entra / JWT auth</span><span class="tag">Per-call cost tracing</span>
     </div>
   </article>
 
   <article class="card">
     <div class="card-head">
-      <h2>Nova <span class="sub">— my own multi-agent assistant</span></h2>
+      <h3>Nova <span class="sub">— my own multi-agent assistant</span></h3>
       <span class="pill self">Personal R&amp;D</span>
     </div>
-    <p class="what">Specialized agents acting as doers under one orchestrator, with scheduled automation, persistent memory, and deterministic multi-agent workflows. Real agentic experience — not a wrapper around a single prompt.</p>
-    <p class="why"><b>Why it matters:</b> proof I don't build one thing and stop. I build systems continuously, and I build the tools that build the tools. This is where I push the frontier before it shows up in the work.</p>
-    <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
+    <p class="what">Nova is the assistant I built to work alongside me. Specialized agents (one that researches, one that builds, and a separate critic that reviews the work before I see it) run under a single orchestrator with persistent memory.</p>
+
+    <p class="what">It runs on tools I built and published. <b>RepoLens</b> is how it finds anything across my repos. <b>Arcanum</b>, a separate library of 124 researched field guides, is what it consults instead of guessing or running the same web searches over and over.</p>
+
+    <p class="why"><b>Why it matters:</b> it's how I keep several projects moving at once without dropping any of them. Every night it audits each repo and files what it finds, so in the morning the work comes to me instead of me going looking for it.</p>
+
+    <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Adversarial verification</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
   </article>
 
   <article class="card">
     <div class="card-head">
-      <h2><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">JobFitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h2>
+      <h3><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">JobFitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h3>
       <span class="pill live">Live</span>
     </div>
-    <p class="what">Answer a few questions and get a fit-scored, clickable, direct-to-company job list — all running on <b>Job-Radar, the open-source engine I built</b> (below). A scheduled harvest caches the whole hiring market into a snapshot, so every visitor's search scores that cache with zero external calls per request — visitors stay decoupled from job-board rate limits.</p>
-    <p class="why"><b>Why it matters:</b> I built the engine first, then shipped the live product on top of it — on my own VPS, running in production at <b>jobfitr.app</b>. Full-stack ownership from the engine to the deploy: a product a stranger can actually use.</p>
+    <p class="what">Answer five questions and get back a ranked list of jobs that actually fit you, each one linking straight to the company's own application page. It scores every posting against your answers, merges the same job across sources into one entry, and remembers what you've seen or applied to, so you're only ever looking at what's new.</p>
+    <p class="what">Behind it, JobFitr keeps a live picture of the market by <b>pulling from several sources at once</b> (its own Job-Radar engine, USAJOBS, and Google Jobs) and storing what it finds. A search serves that cache when it's fresh and fetches live when it isn't, with concurrent identical searches sharing one call and a daily ceiling so the free quotas never run away.</p>
+    <p class="why"><b>Why it matters:</b> I built the engine first and published it, then shipped the product on top of it, running on my own server at <b>jobfitr.app</b>. No account, no tracking, nothing to sign up for; a stranger can use it right now.</p>
 
     <div class="engine">
-      <div class="elabel">Powered by my own engine — open source</div>
-      <h3><a class="inl" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">Job-Radar <span class="arrow">↗</span></a></h3>
-      <p>JobFitr runs on Job-Radar — the harvesting-and-scoring engine I built and open-sourced first, then built the app on top of. It scans ~500 companies across ATS platforms and aggregators, bootstraps from Common Crawl, scores every role against a weighted fit model, dedupes across sources, and optionally re-ranks with an LLM — config-driven and pip-installable, shipped through three adversarial reviews.</p>
+      <div class="elabel">Powered by my own engine · open source</div>
+      <h4><a class="inl" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">Job-Radar <span class="arrow">↗</span></a></h4>
+      <p>Job-Radar is the discovery engine underneath. It finds the jobs. It polls companies' own hiring feeds directly, so a role can surface the hour it posts, and it works out which companies are worth polling in the first place, including the enterprise systems that reach hospitals, manufacturers, and government labs rather than only startups. Ten public job APIs cover everything else. A full scan of the open market takes about a minute.</p>
+      <p class="verify"><code>pip install job-radar</code> · <a class="inl" href="https://pypi.org/project/job-radar/" target="_blank" rel="noopener">on PyPI ↗</a> · Apache-2.0</p>
     </div>
 
     <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite · FTS5</span><span class="tag">Common Crawl</span><span class="tag">LLM re-rank</span><span class="tag">Cached harvest</span><span class="tag">Self-hosted VPS</span></div>
   </article>
 
-  <div class="grid3">
+  <div class="grid2">
     <a class="card" href="https://github.com/hawkesj12/repolens" target="_blank" rel="noopener">
-      <div class="card-head"><h2>RepoLens <span class="arrow">↗</span></h2><span class="pill self">Open source</span></div>
-      <p class="what">A portable, zero-install tool that makes any AI-assisted codebase searchable and self-checking: a ranked find-index plus a typed corpus linter, config-driven and standard-library only.</p>
-      <p class="why"><b>Why it matters:</b> my first original open-source tool — designed from scratch, run through three adversarial reviews, with everything that didn't earn its place cut.</p>
-      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">SQLite FTS5</span><span class="tag">View on GitHub</span></div>
+      <div class="card-head"><h3>RepoLens <span class="arrow">↗</span></h3><span class="pill self">Open source</span></div>
+      <p class="what">RepoLens is a <b>context engine for AI agents</b>. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search, and it is set-and-forget: every search re-indexes whatever changed, so results never go stale.</p>
+      <p class="why"><b>Why it matters:</b> I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. It ships a benchmark so you don't have to take my word for it: on its own repo, <b>hybrid finds the right file in the top eight every time; keyword-only manages half.</b> Runs on your machine, no API keys.</p>
+      <p class="verify"><code>pip install repolens-search</code></p>
+      <div class="tags"><span class="tag">Hybrid search</span><span class="tag">SQLite · embeddings</span><span class="tag">MIT</span><span class="tag">Read the README ↗</span></div>
     </a>
 
     <a class="card" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
-      <div class="card-head"><h2>Revline <span class="arrow">↗</span></h2><span class="pill self">Open source</span></div>
-      <p class="what">A rich, single-file status line for Claude Code — model, cost, git state, and a live token-throughput tachometer, right in the terminal footer. Zero dependencies, drops in with three lines of config.</p>
-      <p class="why"><b>Why it matters:</b> a polished dev tool other builders can drop in — one readable Python file, no dependencies, with the small delightful touches (a green-to-red throughput gauge, live layout toggle) that separate a script from a product.</p>
-      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">Claude Code</span><span class="tag">View on GitHub</span></div>
+      <div class="card-head"><h3>Revline <span class="arrow">↗</span></h3><span class="pill self">Open source</span></div>
+      <p class="what">A status line for Claude Code that answers at a glance everything you'd otherwise stop and check: which repo and branch you're on, what's staged, how long since the last commit, how much context is left, what the session has cost, how much of your rate limit is spent and when it resets, and whether the model is thinking. Plus a live tachometer of tokens being read and written, across five timescales.</p>
+      <p class="why"><b>Why it matters:</b> running it taught me a lot about how Claude Code actually works. You notice patterns when the numbers sit in front of you all day. One readable Python file, no dependencies, three lines of config to install.</p>
+      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">Claude Code</span><span class="tag">Read the README ↗</span></div>
     </a>
 
-    <article class="card">
-      <div class="card-head"><h2>Mesh</h2><span class="pill self">Hardware + firmware</span></div>
-      <p class="what">A rural Meshtastic LoRa mesh network — long-range, solar-friendly radio comms that keep working with no internet and no cell signal.</p>
-      <p class="why"><b>Why it matters:</b> systems thinking past pure software — hardware, firmware, and resilience.</p>
-      <div class="tags"><span class="tag">Meshtastic</span><span class="tag">LoRa</span><span class="tag">embedded</span></div>
-    </article>
   </div>
 
-  <div class="rail">How I work</div>
-  <p class="tools-lede">Part of how one person ships this much: I work at the edge of the tooling, and I pick the sharp tool over the default — often the local, open, or indie one. Knowing which tools are actually worth adopting is its own kind of engineering judgment. These are the ones I reach for every day — mostly built by other builders, and one (Revline) I built myself.</p>
+  <article class="card" style="margin-top:16px">
+    <div class="card-head"><h3>Mesh <span class="sub">— a radio network for when the cell towers don't work</span></h3><span class="pill self">Hardware + firmware</span></div>
+    <p class="what">A long-range radio mesh across rural Kentucky, north-east of Louisville. LoRa nodes relay messages to each other over miles with no internet and no cell service, so friends and family still have a way to reach each other if the network goes down. One node is a solar-powered fixed repeater; the rest are portable.</p>
+
+    <p class="what">Deciding where the nodes should go turned out to be the real engineering. For each proposed link I sampled 60 elevation points along the path and solved for the antenna height that would clear both the terrain and the Fresnel zone, with earth curvature accounted for. <b>Four of the six links I wanted would have needed a 100-metre mast</b>, so I redesigned the network around the two that were actually achievable.</p>
+
+    <p class="why"><b>Why it matters:</b> I'd never touched RF propagation, firmware, or power budgets before this. What carried over was the habit of measuring instead of guessing: a database logging 664 nodes and 10,000+ observations, solar output tracked over time, and an antenna comparison I kept honest by swapping the new antenna into the exact tree position the old one had held, so the only variable was the antenna itself.</p>
+
+    <div class="tags"><span class="tag">Meshtastic · LoRa</span><span class="tag">RF path analysis</span><span class="tag">Solar power</span><span class="tag">SQLite</span><span class="tag">embedded</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head"><h3>The Counter Program <span class="sub">— before any of this was called AI</span></h3><span class="pill self">2022 · AutoCAD + VBA</span></div>
+    <p class="what">Building a custom trade-show counter meant 4 to 12 hours of drafting, every time, by hand. I wrote a program that takes the dimensions and options as inputs and returns a finished, manufacturable 3D model. <b>It did in about 60 seconds what took a full day</b>, and it made the work trainable for people who had just started.</p>
+
+    <p class="what">It isn't a macro. It validates every input and refuses to run on a bad one, builds the whole cabinet from primitive solids and boolean operations, and models the real materials: three-quarter-inch ply with dado joints, laminate wrapped on each face, toe-kicks, adjustable shelves that generate their own peg-hole arrays. The geometry adapts to the inputs: past a certain width it gives you two doors instead of one.</p>
+
+    <p class="why"><b>Why it matters:</b> it's the same move I make now, just in older tools: feed it the inputs, get back a finished thing, and a day of work becomes a minute. I built a handful of tools like this across two companies over those years.</p>
+    <div class="tags"><span class="tag">AutoCAD · VBA</span><span class="tag">Parametric modeling</span><span class="tag">Generative geometry</span><span class="tag">4–12 hrs → 60 sec</span></div>
+  </article>
+
+  <h2 class="rail">How I work</h2>
+  <p class="tools-lede">Part of how one person ships this much: I don't guess, about what to build or how. The <em>what</em> comes from the people who will use it. I ask the right questions until the real problem is clear, then I go build it. The <em>how</em> is deliberate tool choice. I use what a project actually needs, and build custom when a framework would add more weight than value. Nova's orchestration and Atlas's pipeline are custom by choice, and I work in SQL across PostgreSQL, SQLite, and DuckDB. I research a tool before I commit to it: what it's good at, where it breaks, what it costs me later. Sometimes the right one is the obvious default and sometimes it's something local or open that most people haven't picked up. And the open-source tools on this page, Revline included, all began the same way: something I built because I needed it, then published when it turned out other people did too.</p>
 
   <div class="toolgrid">
     <a class="tool" href="https://claude.com/product/claude-code" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Claude Code<span class="arrow">↗</span></span><span class="tcat">Build</span></div>
-      <div class="trole">My primary build surface — agentic, multi-file, terminal-native. Where I actually ship.</div>
+      <div class="trole">My primary build surface: agentic, multi-file, terminal-native. Where I actually ship.</div>
     </a>
     <a class="tool" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Revline<span class="arrow">↗</span></span><span class="tcat">Statusline</span></div>
-      <div class="trole">My own status line for Claude Code — model, cost, git, and a live token-throughput tachometer in the footer. The one tool here I built myself.</div>
+      <div class="trole">My own status line for Claude Code: model, cost, git, and a live token-throughput tachometer in the footer. The one tool here I built myself.</div>
     </a>
     <a class="tool" href="https://tryvoiceink.com/" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">VoiceInk<span class="arrow">↗</span></span><span class="tcat">Dictation</span></div>
-      <div class="trole">On-device, open-source dictation — the local alternative to Wispr Flow. My voice never leaves the Mac.</div>
+      <div class="trole">On-device, open-source dictation. The local alternative to Wispr Flow. My voice never leaves the Mac.</div>
     </a>
     <a class="tool" href="https://speakeleven.com/" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Speak11<span class="arrow">↗</span></span><span class="tcat">Text-to-speech</span></div>
-      <div class="trole">A macOS menu-bar reader running Kokoro TTS on-device — local voice, no cloud, no credits. I use it to hear work read back.</div>
+      <div class="trole">A macOS menu-bar reader running Kokoro TTS on-device: local voice, no cloud, no credits. I use it to hear work read back.</div>
     </a>
     <a class="tool" href="https://ollama.com" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Ollama<span class="arrow">↗</span></span><span class="tcat">Local AI</span></div>
-      <div class="trole">LLMs running entirely on my machine — private, free, always on. Powers my own assistant's local layer.</div>
+      <div class="trole">LLMs running entirely on my machine: private, free, always on. Powers my own assistant's local layer.</div>
     </a>
     <a class="tool" href="https://duckdb.org" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">DuckDB<span class="arrow">↗</span></span><span class="tcat">Data</span></div>
-      <div class="trole">In-process analytics — SQL straight over CSVs, Parquet, and my own databases, no server to run.</div>
+      <div class="trole">In-process analytics: SQL straight over CSVs, Parquet, and my own databases, no server to run.</div>
     </a>
   </div>
 
   <div class="through">
     <div class="rail-inv">The through-line</div>
-    <p>The pattern goes back to the start. Early in my career I built a parametric generator that compiled form inputs into a manufacturable 3D model and turned an 8-hour drafting job into about 30 seconds. Every stop since, I've found the system that slows people down and built the fix. <em>I ship, learn, and ship again</em> — faster than most.</p>
+    <p>My dad sat me in front of AutoCAD when I was seven. I've been chasing the next tool ever since: 3D modeling while the shop still drew in 2D, a plugin that flattened curved boat panels, then years of VBA that ended in the counter program above. Then Python, then the Power Platform, now AI. The tools keep changing. <em>The move doesn't: find the thing that's about to matter, learn it properly, and build the system that should already exist.</em></p>
   </div>
 
   <div class="contact">
-    <div class="rail">Get in touch</div>
+    <h2 class="rail">Get in touch</h2>
     <h3>Let's build something that makes the work smarter.</h3>
-    <p>Open to Forward-Deployed and AI-engineering roles where the impact is real and seen. Drop me a line — I read every message.</p>
+    <p>I'm looking for a senior role where building AI systems is the mandate, not something I do on top of the job. Remote, at a product company with a mission I'd believe in. Drop me a line; I read every message.</p>
     <div class="clinks">
       <a class="primary" href="mailto:hawkesj12@gmail.com">Email me</a>
       <a href="tel:+15023774544">Call / text</a>
@@ -326,10 +487,13 @@
 
     <form class="cform" id="cform" action="https://formsubmit.co/ajax/hawkesj12@gmail.com" method="POST">
       <div class="crow">
-        <input type="text" name="name" placeholder="Your name" required autocomplete="name" aria-label="Your name">
-        <input type="email" name="email" placeholder="Your email" required autocomplete="email" aria-label="Your email">
+        <label class="vh" for="cf-name">Your name</label>
+        <input id="cf-name" type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <label class="vh" for="cf-email">Your email</label>
+        <input id="cf-email" type="email" name="email" placeholder="Your email" required autocomplete="email">
       </div>
-      <textarea name="message" rows="4" placeholder="What's on your mind?" required aria-label="Your message"></textarea>
+      <label class="vh" for="cf-message">Your message</label>
+      <textarea id="cf-message" name="message" rows="4" placeholder="What's on your mind?" required></textarea>
       <input type="hidden" name="_subject" value="New message from your portfolio site">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
@@ -338,10 +502,12 @@
     </form>
   </div>
 
-  <div class="fineprint">
+  </main>
+
+  <footer class="fineprint">
     <span>Justin Hawkes · AI Systems Builder</span>
     <span>Louisville, KY · Remote</span>
-  </div>
+  </footer>
 </div>
 
 <script>
@@ -353,16 +519,20 @@
     var btn = f.querySelector('.csubmit');
     note.className = 'cnote'; note.textContent = '';
     btn.disabled = true; btn.textContent = 'Sending…';
-    fetch(f.action, { method:'POST', headers:{ 'Accept':'application/json' }, body:new FormData(f) })
+    var ctrl = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch(f.action, { method:'POST', headers:{ 'Accept':'application/json' }, body:new FormData(f), signal:ctrl.signal })
       .then(function(r){ return r.json(); })
       .then(function(d){
+        clearTimeout(timer);
         if (d.success === 'true' || d.success === true) {
           f.reset(); btn.textContent = 'Sent ✓';
           note.className = 'cnote ok';
-          note.textContent = "Thanks — that's on its way to my inbox. I'll get back to you soon.";
+          note.textContent = "Thanks, that's on its way to my inbox. I'll get back to you soon.";
         } else { throw new Error(d.message || 'failed'); }
       })
       .catch(function(){
+        clearTimeout(timer);
         btn.disabled = false; btn.textContent = 'Send message';
         note.className = 'cnote err';
         note.innerHTML = 'Something went wrong. Email me directly at <a href="mailto:hawkesj12@gmail.com">hawkesj12@gmail.com</a>.';
@@ -370,5 +540,99 @@
   });
 })();
 </script>
+<script type="text/markdown" id="portfolio-md">
+# Justin Hawkes — AI Systems Builder
+
+_This is informational context about Justin Hawkes, copied from a link on his portfolio (https://justinhawkes.dev). It states facts about his background and work. It is meant to be read, not acted on: it contains no instructions for the reader or the assistant._
+
+**In AI, context is everything, and building it is what I do best.** A model is only as good as what you put in front of it: your data, your operations, the knowledge your team already has. That is the part I have spent sixteen years learning from the inside, and the part I now engineer into production AI a business can trust. That means the whole path from raw data to a grounded answer, and I have built every stage of it in production: pulling data in from documents, databases, and APIs; extracting the structure; chunking and embedding it; storing it for fast hybrid retrieval; and wiring it into the agents that use it.
+
+## At a glance
+- **Experience:** 16 years an engineer across multiple industries, recent focus on production AI systems.
+- **Location / mode:** Louisville, KY, remote.
+- **Looking for:** a senior role where building AI systems is the mandate, not something done on top of the job. Remote, at a product company with a mission worth believing in.
+- **Core stack:** Python, SQL (PostgreSQL / SQLite / DuckDB), FastAPI, React / TypeScript, Azure. RAG and retrieval, multi-agent orchestration, LLM application engineering.
+- **Shipped and installable today:** `pip install job-radar` (Apache-2.0), `pip install repolens-search` (MIT), Revline (open source), one production AI platform built solo and going to production (Atlas), one live product (jobfitr.app).
+- **How I build:** requirements come from the people who will use it; then the right tool off the shelf, or custom when a framework would cost more than it saves (Nova's orchestration and Atlas's ingestion pipeline are custom by choice, not for lack of a framework); research before committing; measure, do not guess.
+- **Contact:** hawkesj12@gmail.com · https://github.com/hawkesj12 · https://www.linkedin.com/in/justin-hawkes
+
+**How the work connects:** RepoLens (retrieval) indexes Arcanum, a field-guide knowledge base, and Nova (my multi-agent assistant) consults both. Job-Radar (the open-source engine) is the discovery layer under JobFitr (the live product). Revline instruments my own Claude Code sessions.
+
+## Atlas — production AI operations platform
+The AI operations platform I built for my employer's warehouse-automation division. A new opportunity is created in Atlas, and everything downstream lives there too: customers, site photos, estimates, vendor quotes, proposals, milestones, on a dashboard the team can slice. Claude works across it: answering questions from the team's own records, pulling structured data out of incoming customer documents, and researching accounts overnight. 44 tables, 205 API routes, a React front end, running as one app against one database, with no microservices, queues, or containers.
+Why it matters: nothing a model extracts touches a real record until a person accepts it. "AI proposes, humans dispose" is the governance that lets the business trust it with real work. I originated it, built it solo from architecture through deployment, demoed it to the company president, and it is on its way to production.
+Stack: Python/FastAPI, RAG/retrieval, React 19/TypeScript, PostgreSQL, Azure, cost-tiered LLM routing, Entra/JWT auth, per-call cost tracing.
+
+## Nova — my own multi-agent assistant (personal R&D)
+An assistant I built to work alongside me: specialized agents (research, build, and a separate critic that reviews the work before I see it) under one orchestrator with persistent memory. It runs on tools I built and published. RepoLens finds anything across my repos; Arcanum, a library of researched field guides, is what it consults instead of guessing. Every night it audits each repo and files what it finds.
+Stack: multi-agent orchestration, adversarial verification, Python, scheduled automation, SQLite.
+
+## JobFitr — live job-search web app (jobfitr.app)
+Answer five questions, get a ranked list of jobs that fit you, each linking straight to the company's own application page. It scores every posting, dedupes across sources, and remembers what you have seen or applied to. Behind it, JobFitr keeps a live picture of the market by pulling from several sources at once (its own Job-Radar engine, USAJOBS, and Google Jobs) and storing what it finds, serving the cache when it is fresh and fetching live when it is not. No account, no tracking, a stranger can use it right now. Built on Job-Radar (below), which I open-sourced first.
+
+## Job-Radar — open-source job-market discovery engine (pip install job-radar, Apache-2.0)
+Polls companies' own hiring feeds directly so a role surfaces the hour it posts, works out which companies are worth polling in the first place (including the enterprise systems that reach hospitals, manufacturers, and government labs, not just startups), and sweeps ten public job APIs for the rest. A full scan of the open market takes about a minute.
+GitHub repo: https://github.com/hawkesj12/job-radar · PyPI: https://pypi.org/project/job-radar/
+
+## RepoLens — a context engine for AI agents (pip install repolens-search, MIT)
+RepoLens is the retrieval layer that gives an AI agent the right context. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search. I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. Set-and-forget: every search re-indexes whatever changed, so results are never stale. Ships a benchmark: on its own repo, hybrid finds the right file in the top eight every time; keyword-only manages half. Runs locally, no API keys.
+GitHub repo: https://github.com/hawkesj12/repolens
+
+## Revline — single-file status line for Claude Code (open source)
+Answers at a glance what you would otherwise stop and check: repo and branch, what is staged, time since last commit, context left, session cost, rate-limit budget and reset, and whether the model is thinking, plus a live tachometer of tokens read and written across five timescales. One readable Python file, no dependencies.
+GitHub repo: https://github.com/hawkesj12/revline
+
+## Mesh — a long-range radio network (hardware + firmware)
+A LoRa mesh across rural Kentucky that relays messages with no internet and no cell service, including a solar-powered fixed repeater. Siting it was real RF work: for each proposed link I sampled 60 elevation points along the path and solved for the antenna height that clears both the terrain and the Fresnel zone, with earth curvature accounted for. Four of the six links I wanted would have needed a 100-metre mast, so I redesigned the network around the two that were achievable. Instrumented with a database (664 nodes, 10,000+ observations), solar output tracked over time, and a controlled antenna A/B.
+
+## The Counter Program — before any of this was called AI (2022, AutoCAD + VBA)
+Custom trade-show counters took 4–12 hours of drafting by hand. I wrote a program that takes the dimensions and options as inputs and returns a finished, manufacturable 3D model, about 60 seconds instead of a full day, and trainable for new hires. It validates every input and refuses to run on a bad one, builds the whole cabinet from primitive solids and boolean operations, models the real materials (dado joints, laminate, peg-hole arrays), and adapts the geometry to the inputs. I built a handful of tools like this across two companies over those years.
+
+## How I work
+I do not guess, about what to build or how. The what comes from the people who will use it: I ask the right questions until the real problem is clear, then I build it. I build the software myself, but I do not decide alone what it should be. The how is deliberate tool choice: the right tool off the shelf, or a custom build when a framework would cost more than it saves. I research a tool before I commit to it: what it is good at, where it breaks, what it costs me later. The open-source tools here all began the same way: something I built because I needed it, then published when it turned out other people did too. Daily drivers: Claude Code, Revline (mine), VoiceInk, Speak11, Ollama, DuckDB.
+
+## The through-line
+My dad sat me in front of AutoCAD when I was seven. I have chased the next tool ever since: 3D modeling before the shop did, a plugin that flattened curved boat panels, years of VBA, then Python, then the Power Platform, now AI. The move does not change: find the thing that is about to matter, learn it properly, and build the system that should already exist.
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('copyMd');
+  var src = document.getElementById('portfolio-md');
+  if (!btn || !src) return;
+  var label = btn.querySelector('.clabel');
+  var original = label.textContent;
+  var timer;
+  function flash(msg, ok){
+    clearTimeout(timer);
+    label.textContent = msg;
+    btn.classList.toggle('done', !!ok);
+    timer = setTimeout(function(){ label.textContent = original; btn.classList.remove('done'); }, 2800);
+  }
+  btn.addEventListener('click', function(){
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: 'copy-md-context', title: 'Copy page as AI context', event: true });
+    }
+    var text = src.textContent.trim();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function(){ flash('Copied. Ready to paste into your AI.', true); },
+        function(){ fallback(text); }
+      );
+    } else { fallback(text); }
+  });
+  function fallback(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position='absolute'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); flash('Copied. Ready to paste into your AI.', true); }
+    catch(e){ flash('Press Ctrl/Cmd+C to copy'); }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+<script data-goatcounter="https://hawkesj12.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

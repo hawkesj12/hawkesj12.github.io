@@ -111,6 +111,34 @@
   .cs-t { font-family:var(--mono); font-size:9.5px; color:var(--muted); text-transform:uppercase;
     letter-spacing:.05em; white-space:nowrap; }
 
+  /* ---- card footer actions (repo link · architecture map) ---- */
+  .cardfoot { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:16px; }
+  .cardact { display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.01em;
+    color:var(--accent-ink); background:none; border:0; padding:0; text-decoration:none;
+    border-bottom:1px solid transparent; transition:border-color .15s; }
+  .cardact:hover { border-bottom-color:color-mix(in srgb,var(--accent) 55%,transparent); }
+  .cardact:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+  .cardact svg { width:14px; height:14px; flex-shrink:0; }
+
+  /* ---- architecture map modal ---- */
+  .mapmodal { position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center;
+    padding:24px; background:rgba(15,19,25,.80); }
+  .mapmodal[open], .mapmodal.show { display:flex; }
+  .mapmodal-panel { position:relative; width:min(96vw,1500px); max-height:94vh; display:flex; flex-direction:column;
+    background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.5); }
+  .mapmodal-bar { display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 16px; border-bottom:1px solid var(--line); }
+  .mapmodal-title { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--ink); }
+  .mapmodal-x { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
+    cursor:pointer; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink-soft);
+    font-size:18px; line-height:1; transition:border-color .15s, color .15s; }
+  .mapmodal-x:hover { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); }
+  .mapmodal-x:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .mapmodal-body { padding:16px; overflow:auto; background:var(--line-soft); }
+  .mapmodal-body img { display:block; width:100%; height:auto; border-radius:8px; background:#fff; }
+
   /* ---- stats ---- */
   .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
     border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:34px 0 8px; }
@@ -307,6 +335,11 @@
       <span class="tag">Python · FastAPI</span><span class="tag">RAG / retrieval</span><span class="tag">React 19 / TypeScript</span>
       <span class="tag">PostgreSQL · Azure</span><span class="tag">Cost-tiered LLM routing</span><span class="tag">Entra / JWT auth</span><span class="tag">Per-call cost tracing</span>
     </div>
+    <div class="cardfoot">
+      <button class="cardact" type="button" data-map="maps/atlas.svg" data-title="Atlas — architecture" aria-label="View the Atlas architecture map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="5" rx="1"/><rect x="2.5" y="16" width="7" height="5" rx="1"/><rect x="14.5" y="16" width="7" height="5" rx="1"/><path d="M12 8v5.5M6 16v-2.5h12V16"/></svg>Architecture
+      </button>
+    </div>
   </article>
 
   <article class="card">
@@ -321,6 +354,11 @@
     <p class="why"><b>Why it matters:</b> it's how I keep several projects moving at once without dropping any of them. Every night it audits each repo and files what it finds, so in the morning the work comes to me instead of me going looking for it.</p>
 
     <div class="tags"><span class="tag">Multi-agent orchestration</span><span class="tag">Adversarial verification</span><span class="tag">Python</span><span class="tag">Scheduled automation</span><span class="tag">SQLite</span></div>
+    <div class="cardfoot">
+      <button class="cardact" type="button" data-map="maps/nova.svg" data-title="Nova — architecture" aria-label="View the Nova architecture map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="5" rx="1"/><rect x="2.5" y="16" width="7" height="5" rx="1"/><rect x="14.5" y="16" width="7" height="5" rx="1"/><path d="M12 8v5.5M6 16v-2.5h12V16"/></svg>Architecture
+      </button>
+    </div>
   </article>
 
   <article class="card">
@@ -340,23 +378,36 @@
     </div>
 
     <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite · FTS5</span><span class="tag">Common Crawl</span><span class="tag">LLM re-rank</span><span class="tag">Cached harvest</span><span class="tag">Self-hosted VPS</span></div>
+    <div class="cardfoot">
+      <button class="cardact" type="button" data-map="maps/jobfitr.svg" data-title="JobFitr &amp; Job-Radar — architecture" aria-label="View the JobFitr architecture map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="5" rx="1"/><rect x="2.5" y="16" width="7" height="5" rx="1"/><rect x="14.5" y="16" width="7" height="5" rx="1"/><path d="M12 8v5.5M6 16v-2.5h12V16"/></svg>Architecture
+      </button>
+    </div>
   </article>
 
   <div class="grid2">
-    <a class="card" href="https://github.com/hawkesj12/repolens" target="_blank" rel="noopener">
-      <div class="card-head"><h3>RepoLens <span class="arrow">↗</span></h3><span class="pill self">Open source</span></div>
+    <article class="card">
+      <div class="card-head"><h3>RepoLens</h3><span class="pill self">Open source</span></div>
       <p class="what">RepoLens is a <b>context engine for AI agents</b>. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search, and it is set-and-forget: every search re-indexes whatever changed, so results never go stale.</p>
       <p class="why"><b>Why it matters:</b> I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. It ships a benchmark so you don't have to take my word for it: on its own repo, <b>hybrid finds the right file in the top eight every time; keyword-only manages half.</b> Runs on your machine, no API keys.</p>
       <p class="verify"><code>pip install repolens-search</code></p>
-      <div class="tags"><span class="tag">Hybrid search</span><span class="tag">SQLite · embeddings</span><span class="tag">MIT</span><span class="tag">Read the README ↗</span></div>
-    </a>
+      <div class="tags"><span class="tag">Hybrid search</span><span class="tag">SQLite · embeddings</span><span class="tag">MIT</span></div>
+      <div class="cardfoot">
+        <a class="cardact" href="https://github.com/hawkesj12/repolens" target="_blank" rel="noopener">GitHub repo ↗</a>
+        <button class="cardact" type="button" data-map="maps/repolens.svg" data-title="RepoLens — architecture" aria-label="View the RepoLens architecture map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="5" rx="1"/><rect x="2.5" y="16" width="7" height="5" rx="1"/><rect x="14.5" y="16" width="7" height="5" rx="1"/><path d="M12 8v5.5M6 16v-2.5h12V16"/></svg>Architecture</button>
+      </div>
+    </article>
 
-    <a class="card" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
-      <div class="card-head"><h3>Revline <span class="arrow">↗</span></h3><span class="pill self">Open source</span></div>
+    <article class="card">
+      <div class="card-head"><h3>Revline</h3><span class="pill self">Open source</span></div>
       <p class="what">A status line for Claude Code that answers at a glance everything you'd otherwise stop and check: which repo and branch you're on, what's staged, how long since the last commit, how much context is left, what the session has cost, how much of your rate limit is spent and when it resets, and whether the model is thinking. Plus a live tachometer of tokens being read and written, across five timescales.</p>
       <p class="why"><b>Why it matters:</b> running it taught me a lot about how Claude Code actually works. You notice patterns when the numbers sit in front of you all day. One readable Python file, no dependencies, three lines of config to install.</p>
-      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">Claude Code</span><span class="tag">Read the README ↗</span></div>
-    </a>
+      <div class="tags"><span class="tag">Python stdlib</span><span class="tag">Claude Code</span></div>
+      <div class="cardfoot">
+        <a class="cardact" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">GitHub repo ↗</a>
+        <button class="cardact" type="button" data-map="maps/revline.svg" data-title="Revline — architecture" aria-label="View the Revline architecture map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3" width="7" height="5" rx="1"/><rect x="2.5" y="16" width="7" height="5" rx="1"/><rect x="14.5" y="16" width="7" height="5" rx="1"/><path d="M12 8v5.5M6 16v-2.5h12V16"/></svg>Architecture</button>
+      </div>
+    </article>
 
   </div>
 
@@ -574,6 +625,46 @@ My dad sat me in front of AutoCAD when I was seven. I have chased the next tool 
   }
 })();
 </script>
+<div class="mapmodal" id="mapModal" role="dialog" aria-modal="true" aria-label="Architecture map">
+  <div class="mapmodal-panel">
+    <div class="mapmodal-bar">
+      <span class="mapmodal-title" id="mapModalTitle">Architecture</span>
+      <button class="mapmodal-x" id="mapModalClose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="mapmodal-body"><img id="mapModalImg" alt="" src=""></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById('mapModal'),
+      img=document.getElementById('mapModalImg'),
+      title=document.getElementById('mapModalTitle'),
+      closeBtn=document.getElementById('mapModalClose'),
+      lastFocus=null;
+  if(!modal) return;
+  function open(src,label){
+    lastFocus=document.activeElement;
+    img.src=src; img.alt=label; title.textContent=label;
+    modal.classList.add('show');
+    document.body.style.overflow='hidden';
+    closeBtn.focus();
+  }
+  function close(){
+    modal.classList.remove('show');
+    document.body.style.overflow='';
+    img.src='';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('.cardact[data-map]').forEach(function(b){
+    b.addEventListener('click',function(){ open(b.getAttribute('data-map'), b.getAttribute('data-title')||'Architecture'); });
+  });
+  closeBtn.addEventListener('click',close);
+  modal.addEventListener('click',function(e){ if(e.target===modal) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && modal.classList.contains('show')) close(); });
+})();
+</script>
+
 <script data-goatcounter="https://hawkesj12.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </body>

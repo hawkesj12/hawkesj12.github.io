@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img"
+     aria-label="Public architecture map of jobfitr, a self-hostable, cached-harvest job app on top of the job-radar engine. A browser web app reaches a web application through a reverse proxy; each request scores a cached pool of jobs with a free scoring plane and zero external calls, while an optional metered LLM chat plane refines the fit. Offline, a scheduled harvest job uses the job-radar engine to pull vendor job APIs into the job cache."
+     font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <!--
+    jobfitr (public) · Blueprint Lanes · architecture-map v0.3.0 · public · FLOW
+    Layers = neutral lanes (grouping in VALUE). Cards = category (meaning in HUE).
+    Container-level, sanitized. Palette + rules: _map-spec.md.
+  -->
+  <defs>
+    <style>
+      :root{
+        --paper:#eceee9; --lane-a:#f6f7f4; --lane-b:#f1f2ee; --rule:#e0e2dd;
+        --card:#ffffff; --ink:#26303a; --body:#4b5560; --muted:#8b939c;
+        --header:#1d2a36; --chip:#dfe3e4;
+        --entry-a:#00a19a; --entry-t:#006a65;
+        --compute-a:#8673d9; --compute-t:#564597;
+        --data-a:#2f8adc; --data-t:#00579a;
+        --external-a:#b761b1; --external-t:#7b3577;
+        --scheduled-a:#68737e; --scheduled-t:#474e55;
+        --governance-a:#d15c56; --governance-t:#90302e;
+        --free-a:#2e9e52; --free-t:#00682a;
+        --metered-a:#b47900; --metered-t:#7a4a00;
+      }
+      .h1{font-size:25px;font-weight:800;fill:#eef2f6;letter-spacing:.2px}
+      .h2{font-size:13px;fill:#aab6c1}
+      .meta{font-size:11px;fill:#8b98a4}
+      .chip-t{font-size:11px;font-weight:700;letter-spacing:1.5px;fill:#5b6470}
+      .card{fill:var(--card);stroke:#e4e7e3;stroke-width:1}
+      .accent{stroke-width:0}
+      .ctitle{font-size:14.5px;font-weight:700}
+      .cbody{font-size:11.5px;fill:var(--body)}
+      .cmono{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;fill:var(--muted)}
+      .badge{fill:var(--header)} .badge-n{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle}
+      .edge{stroke:#9aa3aa;stroke-width:2;fill:none}
+      .edge-lbl{font-size:10px;fill:var(--muted)}
+      .legend-lbl{font-size:11.5px;fill:var(--body)}
+      .footer{font-size:11.5px;fill:var(--body)}
+      .prov{font-size:10.5px;fill:var(--muted)}
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9aa3aa"/>
+    </marker>
+    <filter id="lift" x="-8%" y="-20%" width="116%" height="150%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="3.5" flood-color="#1d2a36" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="760" fill="var(--paper)"/>
+
+  <!-- ============ HEADER ============ -->
+  <rect x="0" y="0" width="1200" height="92" fill="var(--header)"/>
+  <rect x="0" y="90" width="1200" height="2" fill="#0f1922"/>
+  <text x="40" y="44" class="h1">jobfitr <tspan class="h2" dx="8">— system architecture</tspan></text>
+  <text x="40" y="70" class="h2">A self-hostable, cached-harvest job app: answer a few questions, get fit-scored, direct-to-company links. Zero external calls per request.</text>
+  <text x="1160" y="36" text-anchor="end" class="meta">v1.0 · 2026-07-23</text>
+  <text x="1160" y="54" text-anchor="end" class="meta">mode: public · archetype: FLOW</text>
+  <text x="1160" y="72" text-anchor="end" class="meta">jobfitr · Apache-2.0</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g transform="translate(40,116)">
+    <text x="0" y="11" class="chip-t">LEGEND</text>
+    <g transform="translate(74,0)">
+      <!-- each swatch is a miniature of the card: white body + category accent bar -->
+      <rect x="0"   y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="1.5"   y="2.5" width="3" height="9" rx="1.5" fill="var(--entry-a)"    stroke="var(--entry-a)"/>    <text x="26"  y="11" class="legend-lbl">entry</text>
+      <rect x="66"  y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="67.5"  y="2.5" width="3" height="9" rx="1.5" fill="var(--compute-a)"  stroke="var(--compute-a)"/>  <text x="92"  y="11" class="legend-lbl">compute</text>
+      <rect x="148" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="149.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--data-a)"     stroke="var(--data-a)"/>     <text x="174" y="11" class="legend-lbl">data</text>
+      <rect x="210" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="211.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--external-a)" stroke="var(--external-a)"/> <text x="236" y="11" class="legend-lbl">external</text>
+      <rect x="294" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="295.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--scheduled-a)" stroke="var(--scheduled-a)"/><text x="320" y="11" class="legend-lbl">scheduled</text>
+      <rect x="386" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="387.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--free-a)"     stroke="var(--free-a)"/>     <text x="412" y="11" class="legend-lbl">free plane</text>
+      <rect x="482" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="483.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--metered-a)"  stroke="var(--metered-a)"/>  <text x="508" y="11" class="legend-lbl">metered plane</text>
+      <g transform="translate(614,0)">
+        <rect x="0" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="var(--muted)" stroke-dasharray="3 2"/>
+        <text x="26" y="11" class="legend-lbl">offline (dashed)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ LANES (neutral = grouping in VALUE) ============ -->
+  <rect x="24" y="150" width="1152" height="72" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="186" class="chip-t" transform="rotate(-90 44 186)" text-anchor="middle">ENTRY</text>
+
+  <rect x="24" y="230" width="1152" height="72" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="266" class="chip-t" transform="rotate(-90 44 266)" text-anchor="middle">EDGE</text>
+
+  <rect x="24" y="310" width="1152" height="118" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="369" class="chip-t" transform="rotate(-90 44 369)" text-anchor="middle">COMPUTE</text>
+
+  <rect x="24" y="436" width="1152" height="92" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="482" class="chip-t" transform="rotate(-90 44 482)" text-anchor="middle">DATA</text>
+
+  <rect x="24" y="536" width="1152" height="128" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="600" class="chip-t" transform="rotate(-90 44 600)" text-anchor="middle">SCHEDULED</text>
+
+  <!-- ============ EDGES (orthogonal, in gutters — never over a card) ============ -->
+  <!-- spine: web app → reverse proxy → application → job cache -->
+  <path class="edge" d="M600 214 L600 238" marker-end="url(#ah)"/>
+  <path class="edge" d="M600 294 L600 320" marker-end="url(#ah)"/>
+  <path class="edge" d="M600 418 L600 444" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="612" y="434">reads</text>
+  <!-- application ↔ free scoring plane -->
+  <path class="edge" d="M448 369 L392 369" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="420" y="362" text-anchor="middle">scores</text>
+  <!-- application → metered LLM chat -->
+  <path class="edge" d="M752 369 L808 369" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="780" y="362" text-anchor="middle">refine</text>
+  <!-- harvest job → job cache (up through the left gutter, no card crossed) -->
+  <path class="edge" d="M240 546 L240 532 L475 532 L475 522" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="300" y="528">harvest writes</text>
+  <!-- harvest job → job-radar engine -->
+  <path class="edge" d="M392 600 L448 600" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="420" y="593" text-anchor="middle">uses</text>
+  <!-- job-radar engine → vendor job APIs -->
+  <path class="edge" d="M752 600 L808 600" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="780" y="593" text-anchor="middle">pulls</text>
+
+  <!-- ============ CARDS (category = HUE) ============ -->
+
+  <!-- ENTRY · web app -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="158" width="320" height="56" rx="9"/>
+    <rect class="accent" x="440" y="158" width="5" height="56" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="180" r="9"/><text class="badge-n" x="462" y="184">1</text>
+  <text class="ctitle" x="484" y="182" fill="var(--entry-t)">Web app · single-page UI</text>
+  <text class="cbody" x="484" y="202">answer a few questions, get ranked links</text>
+
+  <!-- EDGE · reverse proxy -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="238" width="320" height="56" rx="9"/>
+    <rect class="accent" x="440" y="238" width="5" height="56" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <text class="ctitle" x="464" y="262" fill="var(--entry-t)">Reverse proxy · auto-HTTPS</text>
+  <text class="cbody" x="464" y="282">serves the UI · routes API calls</text>
+
+  <!-- COMPUTE · free scoring plane -->
+  <g filter="url(#lift)">
+    <rect class="card" x="90" y="320" width="300" height="98" rx="9"/>
+    <rect class="accent" x="90" y="320" width="5" height="98" rx="2.5" fill="var(--free-a)"/>
+  </g>
+  <text class="ctitle" x="114" y="348" fill="var(--free-t)">Free scoring plane</text>
+  <text class="cbody" x="114" y="370">ranks the cached jobs to fit</text>
+  <text class="cmono" x="114" y="392">no external calls · full-text + rerank</text>
+  <text class="cmono" x="114" y="410">runs on every request</text>
+
+  <!-- COMPUTE · web application -->
+  <g filter="url(#lift)">
+    <rect class="card" x="450" y="320" width="300" height="98" rx="9"/>
+    <rect class="accent" x="450" y="320" width="5" height="98" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="472" cy="342" r="9"/><text class="badge-n" x="472" y="346">2</text>
+  <text class="ctitle" x="494" y="346" fill="var(--compute-t)">Web application</text>
+  <text class="cbody" x="494" y="368">handles requests · orchestrates scoring</text>
+  <text class="cmono" x="494" y="390">stateless · rate-limited</text>
+  <text class="cmono" x="494" y="408">re-imports the harvest snapshot</text>
+
+  <!-- COMPUTE · metered LLM chat -->
+  <g filter="url(#lift)">
+    <rect class="card" x="810" y="320" width="300" height="98" rx="9"/>
+    <rect class="accent" x="810" y="320" width="5" height="98" rx="2.5" fill="var(--metered-a)"/>
+  </g>
+  <text class="ctitle" x="834" y="348" fill="var(--metered-t)">Metered LLM chat</text>
+  <text class="cbody" x="834" y="370">optional · refines the fit config</text>
+  <text class="cmono" x="834" y="392">the only metered path</text>
+  <text class="cmono" x="834" y="410">fails closed to a plain form</text>
+
+  <!-- DATA · job cache -->
+  <g filter="url(#lift)">
+    <rect class="card" x="450" y="444" width="300" height="76" rx="9"/>
+    <rect class="accent" x="450" y="444" width="5" height="76" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <circle class="badge" cx="472" cy="466" r="9"/><text class="badge-n" x="472" y="470">3</text>
+  <text class="ctitle" x="494" y="470" fill="var(--data-t)">Job cache · embedded DB</text>
+  <text class="cbody" x="494" y="492">harvested postings · full-text index</text>
+  <text class="cmono" x="494" y="510">the pool every request scores</text>
+
+  <!-- SCHEDULED · harvest job (offline → dashed) -->
+  <g filter="url(#lift)">
+    <rect class="card" x="90" y="546" width="300" height="108" rx="9" stroke="var(--scheduled-a)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <rect class="accent" x="90" y="546" width="5" height="108" rx="2.5" fill="var(--scheduled-a)"/>
+  </g>
+  <text class="ctitle" x="114" y="576" fill="var(--scheduled-t)">Harvest job · scheduled</text>
+  <text class="cbody" x="114" y="600">a wide harvest every few hours</text>
+  <text class="cbody" x="114" y="620">fills the cache with fresh postings</text>
+  <text class="cmono" x="114" y="642">offline · off the request path</text>
+
+  <!-- SCHEDULED · job-radar engine -->
+  <g filter="url(#lift)">
+    <rect class="card" x="450" y="546" width="300" height="108" rx="9"/>
+    <rect class="accent" x="450" y="546" width="5" height="108" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <text class="ctitle" x="474" y="576" fill="var(--compute-t)">job-radar engine</text>
+  <text class="cbody" x="474" y="600">the harvest + scoring core</text>
+  <text class="cbody" x="474" y="620">sources · dedup · fit scoring</text>
+  <text class="cmono" x="474" y="642">the open-source dependency</text>
+
+  <!-- SCHEDULED · vendor job APIs (external) -->
+  <g filter="url(#lift)">
+    <rect class="card" x="810" y="546" width="300" height="108" rx="9"/>
+    <rect class="accent" x="810" y="546" width="5" height="108" rx="2.5" fill="var(--external-a)"/>
+  </g>
+  <text class="ctitle" x="834" y="576" fill="var(--external-t)">Vendor job APIs</text>
+  <text class="cbody" x="834" y="600">keyed boards + aggregators</text>
+  <text class="cbody" x="834" y="620">third-party · rate-limited</text>
+  <text class="cmono" x="834" y="642">also live-queried on a cache miss</text>
+
+  <!-- ============ FOOTER (flow narration · provenance) ============ -->
+  <rect x="40" y="676" width="1120" height="60" rx="10" fill="#f6f7f4" stroke="var(--rule)"/>
+  <text x="58" y="696" class="footer"><tspan font-weight="700" fill="var(--ink)">Flow:</tspan> ① web app → reverse proxy → ② web application scores the ③ job cache with the free plane (zero external calls per request); the optional metered LLM chat plane refines the fit.</text>
+  <text x="58" y="714" class="footer"><tspan font-weight="700" fill="var(--ink)">Offline (dashed):</tspan> a scheduled harvest job uses the job-radar engine to pull vendor job APIs into the cache; on a cache miss the app may live-query a keyed source.</text>
+  <text x="58" y="731" class="prov">public C4 container view</text>
+</svg>

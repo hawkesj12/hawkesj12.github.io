@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 880" role="img"
+     aria-label="Public architecture map of Nova, a personal Claude Code operating system, shown as a bento inventory of six neutral group regions with no flow arrows: Soul and Governance (an auto-loaded operating identity, standing rules, and the enforcing hooks that are the only guarantee); The Atelier, a dispatchable team of specialised agent positions and composable roles; Capabilities that Nova invokes, namely reusable skills and commands, deep multi-agent workflow engines, and a deterministic research helper lane; Memory and Libraries, a cross-project memory store plus reference and produced-artifact libraries; the Autonomous Engine, a nightly scheduled set of ritual builders and an audit suite drawn offline on dashed cards; and External Anchors, the sibling repositories the system serves. Colour encodes category and value encodes grouping, in a light warm-paper house style."
+     font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <!--
+    ARCHITECTURE-MAP · Blueprint Lanes (INVENTORY / bento) · nova · PUBLIC · v0.3.0
+    Value carries grouping (neutral regions); hue carries category (cards).
+    No flow arrows — nova is a catalog, not a request path (spec §4).
+    Public = C4 Context/Container: sanitized, high-abstraction. Standard: _map-spec.md.
+  -->
+  <defs>
+    <style>
+      :root{
+        --paper:#eceee9; --lane-a:#f6f7f4; --lane-b:#f1f2ee; --rule:#e0e2dd;
+        --card:#ffffff; --ink:#26303a; --body:#4b5560; --muted:#8b939c;
+        --header:#1d2a36; --chip:#dfe3e4;
+        --entry-a:#00a19a; --entry-t:#006a65;
+        --compute-a:#8673d9; --compute-t:#564597;
+        --data-a:#2f8adc; --data-t:#00579a;
+        --external-a:#b761b1; --external-t:#7b3577;
+        --scheduled-a:#68737e; --scheduled-t:#474e55;
+        --governance-a:#d15c56; --governance-t:#90302e;
+      }
+      .h1{font-size:25px;font-weight:800;fill:#eef2f6;letter-spacing:.2px}
+      .h2{font-size:13px;fill:#aab6c1}
+      .meta{font-size:11px;fill:#8b98a4}
+      .chip-t{font-size:11px;font-weight:700;letter-spacing:1.5px;fill:#5b6470}
+      .card{fill:var(--card);stroke:#e4e7e3;stroke-width:1}
+      .accent{stroke-width:0}
+      .ctitle{font-size:14.5px;font-weight:700}
+      .cbody{font-size:11.5px;fill:var(--body)}
+      .cmono{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;fill:var(--muted)}
+      .legend-lbl{font-size:11.5px;fill:var(--body)}
+      .footer{font-size:11.5px;fill:var(--body)}
+      .prov{font-size:10.5px;fill:var(--muted)}
+    </style>
+    <filter id="lift" x="-8%" y="-20%" width="116%" height="150%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="3.5" flood-color="#1d2a36" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="880" fill="var(--paper)"/>
+
+  <!-- ============ HEADER ============ -->
+  <rect x="0" y="0" width="1200" height="92" fill="var(--header)"/>
+  <rect x="0" y="90" width="1200" height="2" fill="#0f1922"/>
+  <text x="40" y="44" class="h1">Nova <tspan class="h2" dx="8">— a personal Claude Code operating system</tspan></text>
+  <text x="40" y="70" class="h2">An AI operating partner: a soul plus rules, a dispatchable team, invocable capabilities, memory, and a nightly autonomous engine.</text>
+  <text x="1160" y="30" text-anchor="end" class="meta">v0.3.0 · 2026-07-23</text>
+  <text x="1160" y="48" text-anchor="end" class="meta">mode: public · archetype: INVENTORY</text>
+  <text x="1160" y="66" text-anchor="end" class="meta">repo · Nova 🔆</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g transform="translate(40,116)">
+    <text x="0" y="11" class="chip-t">LEGEND</text>
+    <g transform="translate(84,0)">
+      <!-- each swatch is a miniature of the card: white body + category accent bar -->
+      <rect x="0"   y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="1.5"   y="2.5" width="3" height="9" rx="1.5" fill="var(--governance-a)" stroke="var(--governance-a)"/><text x="26"  y="11" class="legend-lbl">governance</text>
+      <rect x="96"  y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="97.5"  y="2.5" width="3" height="9" rx="1.5" fill="var(--compute-a)"    stroke="var(--compute-a)"/>   <text x="122" y="11" class="legend-lbl">compute</text>
+      <rect x="178" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="179.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--data-a)"       stroke="var(--data-a)"/>      <text x="204" y="11" class="legend-lbl">data</text>
+      <rect x="240" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="241.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--scheduled-a)"  stroke="var(--scheduled-a)"/> <text x="266" y="11" class="legend-lbl">scheduled</text>
+      <rect x="332" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="333.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--external-a)"   stroke="var(--external-a)"/>  <text x="358" y="11" class="legend-lbl">external</text>
+      <g transform="translate(416,0)">
+        <rect x="0" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="var(--muted)" stroke-dasharray="3 2"/>
+        <text x="26" y="11" class="legend-lbl">offline (dashed)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ ROW 1 ============ -->
+  <!-- Region A: SOUL & GOVERNANCE -->
+  <rect x="24" y="150" width="566" height="174" rx="12" fill="var(--lane-a)"/>
+  <text x="42" y="174" class="chip-t">SOUL &amp; GOVERNANCE</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="190" width="538" height="54" rx="9"/>
+    <rect class="accent" x="38" y="190" width="5" height="54" rx="2.5" fill="var(--governance-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="211" fill="var(--governance-t)">Soul &amp; rules</text>
+  <text class="cbody" x="58" y="229">the operating identity + standing conventions, auto-loaded every session</text>
+
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="254" width="538" height="54" rx="9"/>
+    <rect class="accent" x="38" y="254" width="5" height="54" rx="2.5" fill="var(--governance-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="275" fill="var(--governance-t)">Enforcing hooks</text>
+  <text class="cbody" x="58" y="293">the only layer that guarantees behavior — rules and memory merely advise</text>
+
+  <!-- Region B: THE ATELIER -->
+  <rect x="610" y="150" width="566" height="174" rx="12" fill="var(--lane-b)"/>
+  <text x="628" y="174" class="chip-t">THE ATELIER — THE TEAM</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="624" y="190" width="538" height="118" rx="9"/>
+    <rect class="accent" x="624" y="190" width="5" height="118" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <text class="ctitle" x="644" y="213" fill="var(--compute-t)">Dispatchable agent team</text>
+  <text class="cbody" x="644" y="233">specialised positions — research, build, adversarial verify, synthesize</text>
+  <text class="cbody" x="644" y="251">plus composable roles, the mind layered onto a position</text>
+  <text class="cmono" x="644" y="285">separable work fans out · a single build stays single-threaded</text>
+
+  <!-- ============ ROW 2 ============ -->
+  <!-- Region C: CAPABILITIES -->
+  <rect x="24" y="340" width="1152" height="134" rx="12" fill="var(--lane-b)"/>
+  <text x="42" y="364" class="chip-t">CAPABILITIES — WHAT NOVA INVOKES</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="376" width="368" height="82" rx="9"/>
+    <rect class="accent" x="38" y="376" width="5" height="82" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="399" fill="var(--compute-t)">Skills &amp; commands</text>
+  <text class="cbody" x="58" y="418">reusable procedures for a repeated</text>
+  <text class="cbody" x="58" y="434">workflow — model- and user-invocable</text>
+  <text class="cmono" x="58" y="451">the self-building toolbox</text>
+
+  <g filter="url(#lift)">
+    <rect class="card" x="418" y="376" width="368" height="82" rx="9"/>
+    <rect class="accent" x="418" y="376" width="5" height="82" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <text class="ctitle" x="438" y="399" fill="var(--compute-t)">Workflow engines</text>
+  <text class="cbody" x="438" y="418">deterministic multi-agent</text>
+  <text class="cbody" x="438" y="434">orchestrations for altitude work</text>
+  <text class="cmono" x="438" y="451">research · plans · fresh-eyes review</text>
+
+  <g filter="url(#lift)">
+    <rect class="card" x="798" y="376" width="364" height="82" rx="9"/>
+    <rect class="accent" x="798" y="376" width="5" height="82" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <text class="ctitle" x="818" y="399" fill="var(--compute-t)">Deterministic helper lane</text>
+  <text class="cbody" x="818" y="418">scholarly search, clean extraction,</text>
+  <text class="cbody" x="818" y="434">citation verification, filings lookup</text>
+  <text class="cmono" x="818" y="451">reproducible tools, run on demand</text>
+
+  <!-- ============ ROW 3 ============ -->
+  <!-- Region D: MEMORY & LIBRARIES -->
+  <rect x="24" y="490" width="566" height="174" rx="12" fill="var(--lane-a)"/>
+  <text x="42" y="514" class="chip-t">MEMORY &amp; LIBRARIES</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="530" width="538" height="54" rx="9"/>
+    <rect class="accent" x="38" y="530" width="5" height="54" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="551" fill="var(--data-t)">Cross-project memory store</text>
+  <text class="cbody" x="58" y="569">a sanitized findings ledger, session history, and per-project memory</text>
+
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="594" width="538" height="54" rx="9"/>
+    <rect class="accent" x="38" y="594" width="5" height="54" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="615" fill="var(--data-t)">Reference &amp; artifact libraries</text>
+  <text class="cbody" x="58" y="633">durable cross-project knowledge plus the outputs Nova produces and re-reads</text>
+
+  <!-- Region E: AUTONOMOUS ENGINE (scheduled → dashed) -->
+  <rect x="610" y="490" width="566" height="174" rx="12" fill="var(--lane-b)"/>
+  <text x="628" y="514" class="chip-t">AUTONOMOUS ENGINE — DAILY RITUAL</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="624" y="530" width="538" height="54" rx="9" stroke="var(--scheduled-a)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <rect class="accent" x="624" y="530" width="5" height="54" rx="2.5" fill="var(--scheduled-a)"/>
+  </g>
+  <text class="ctitle" x="644" y="551" fill="var(--scheduled-t)">Nightly ritual builders</text>
+  <text class="cbody" x="644" y="569">headless scheduled jobs — morning audit-and-brief, evening recap</text>
+
+  <g filter="url(#lift)">
+    <rect class="card" x="624" y="594" width="538" height="54" rx="9" stroke="var(--scheduled-a)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <rect class="accent" x="624" y="594" width="5" height="54" rx="2.5" fill="var(--scheduled-a)"/>
+  </g>
+  <text class="ctitle" x="644" y="615" fill="var(--scheduled-t)">Audit suite</text>
+  <text class="cbody" x="644" y="633">read-only audits that file deduped findings into the memory ledger</text>
+
+  <!-- ============ ROW 4 ============ -->
+  <!-- Region F: EXTERNAL ANCHORS -->
+  <rect x="24" y="680" width="1152" height="116" rx="12" fill="var(--lane-a)"/>
+  <text x="42" y="704" class="chip-t">EXTERNAL ANCHORS — THE REPOS NOVA SERVES</text>
+  <g filter="url(#lift)">
+    <rect class="card" x="38" y="716" width="1124" height="64" rx="9"/>
+    <rect class="accent" x="38" y="716" width="5" height="64" rx="2.5" fill="var(--external-a)"/>
+  </g>
+  <text class="ctitle" x="58" y="739" fill="var(--external-t)">Sibling repositories</text>
+  <text class="cbody" x="58" y="758">the personal, work, and knowledge repositories Nova governs, audits, and builds within — each with its own local context</text>
+  <text class="cmono" x="58" y="775">Nova is the shared operating layer; the projects are what it serves</text>
+
+  <!-- ============ FOOTER (inventory narration · provenance) ============ -->
+  <rect x="40" y="808" width="1120" height="62" rx="10" fill="#f6f7f4" stroke="var(--rule)"/>
+  <text x="58" y="828" class="footer"><tspan font-weight="700" fill="var(--ink)">Inventory:</tspan> a soul plus rules, guaranteed by enforcing hooks, direct a dispatchable team that invokes skills, workflow engines, and a helper lane,</text>
+  <text x="58" y="845" class="footer">all reading and writing memory and libraries; a nightly scheduled engine audits and briefs. No single request path — a catalog, not a flow.</text>
+  <text x="58" y="862" class="prov">public C4 container view</text>
+</svg>

@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img"
+     aria-label="Public architecture map of repolens, an open-source ranked hybrid search plus typed hygiene linter over a repo's whole corpus. An agent or developer runs the repolens CLI; a find request drives a corpus scanner that walks docs, code purpose-lines, DB schema and gitignored notes into section-bounded chunks, an incremental indexer that re-indexes only changed files each query, and a search and rank engine that fuses BM25 over an FTS index with semantic KNN by Reciprocal Rank Fusion — calling a local embedding model on-machine — then returns the right few files each with its matching passage. A parallel hygiene linter runs the same corpus through typed structural checks and blocks a commit on errors."
+     font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <!--
+    repolens · Blueprint Lanes · architecture-map v0.3.0 · public · FLOW
+    Layers = neutral lanes (grouping in VALUE). Cards = category (meaning in HUE).
+    Palette + rules: _map-spec.md.
+  -->
+  <defs>
+    <style>
+      :root{
+        --paper:#eceee9; --lane-a:#f6f7f4; --lane-b:#f1f2ee; --rule:#e0e2dd;
+        --card:#ffffff; --ink:#26303a; --body:#4b5560; --muted:#8b939c;
+        --header:#1d2a36; --chip:#dfe3e4;
+        --entry-a:#00a19a; --entry-t:#006a65;
+        --compute-a:#8673d9; --compute-t:#564597;
+        --data-a:#2f8adc; --data-t:#00579a;
+        --external-a:#b761b1; --external-t:#7b3577;
+        --scheduled-a:#68737e; --scheduled-t:#474e55;
+        --governance-a:#d15c56; --governance-t:#90302e;
+        --free-a:#2e9e52; --free-t:#00682a;
+        --metered-a:#b47900; --metered-t:#7a4a00;
+      }
+      .h1{font-size:25px;font-weight:800;fill:#eef2f6;letter-spacing:.2px}
+      .h2{font-size:13px;fill:#aab6c1}
+      .meta{font-size:11px;fill:#8b98a4}
+      .chip-t{font-size:11px;font-weight:700;letter-spacing:1.5px;fill:#5b6470}
+      .card{fill:var(--card);stroke:#e4e7e3;stroke-width:1}
+      .accent{stroke-width:0}
+      .ctitle{font-size:14.5px;font-weight:700}
+      .cbody{font-size:11.5px;fill:var(--body)}
+      .cmono{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;fill:var(--muted)}
+      .badge{fill:var(--header)} .badge-n{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle}
+      .edge{stroke:#9aa3aa;stroke-width:2;fill:none}
+      .edge-lbl{font-size:10px;fill:var(--muted)}
+      .legend-lbl{font-size:11.5px;fill:var(--body)}
+      .footer{font-size:11.5px;fill:var(--body)}
+      .prov{font-size:10.5px;fill:var(--muted)}
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9aa3aa"/>
+    </marker>
+    <filter id="lift" x="-8%" y="-20%" width="116%" height="150%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="3.5" flood-color="#1d2a36" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="var(--paper)"/>
+
+  <!-- ============ HEADER ============ -->
+  <rect x="0" y="0" width="1200" height="92" fill="var(--header)"/>
+  <rect x="0" y="90" width="1200" height="2" fill="#0f1922"/>
+  <text x="40" y="44" class="h1">repolens <tspan class="h2" dx="8">— system architecture</tspan></text>
+  <text x="40" y="70" class="h2">Ranked hybrid search + a typed hygiene linter over a repo's whole corpus: docs, code purpose-lines, and DB schema.</text>
+  <text x="1160" y="36" text-anchor="end" class="meta">v0.13.0 · 2026-07-23</text>
+  <text x="1160" y="54" text-anchor="end" class="meta">mode: public · archetype: FLOW</text>
+  <text x="1160" y="72" text-anchor="end" class="meta">repolens · MIT</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g transform="translate(40,116)">
+    <text x="0" y="11" class="chip-t">LEGEND</text>
+    <g transform="translate(84,0)">
+      <!-- each swatch is a miniature of the card: white body + category accent bar -->
+      <rect x="0"   y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="1.5"   y="2.5" width="3" height="9" rx="1.5" fill="var(--entry-a)"      stroke="var(--entry-a)"/>      <text x="26"  y="11" class="legend-lbl">entry</text>
+      <rect x="72"  y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="73.5"  y="2.5" width="3" height="9" rx="1.5" fill="var(--compute-a)"    stroke="var(--compute-a)"/>    <text x="98"  y="11" class="legend-lbl">compute</text>
+      <rect x="164" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="165.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--data-a)"       stroke="var(--data-a)"/>       <text x="190" y="11" class="legend-lbl">data</text>
+      <rect x="232" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="233.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--external-a)"   stroke="var(--external-a)"/>   <text x="258" y="11" class="legend-lbl">external</text>
+      <rect x="320" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="321.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--governance-a)" stroke="var(--governance-a)"/> <text x="346" y="11" class="legend-lbl">governance</text>
+    </g>
+  </g>
+
+  <!-- ============ LANES (neutral = grouping in VALUE) ============ -->
+  <rect x="24" y="150" width="1152" height="88" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="194" class="chip-t" transform="rotate(-90 44 194)" text-anchor="middle">ENTRY</text>
+
+  <rect x="24" y="246" width="1152" height="104" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="298" class="chip-t" transform="rotate(-90 44 298)" text-anchor="middle">SCAN</text>
+
+  <rect x="24" y="358" width="1152" height="104" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="410" class="chip-t" transform="rotate(-90 44 410)" text-anchor="middle">CORE</text>
+
+  <rect x="24" y="470" width="1152" height="88" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="514" class="chip-t" transform="rotate(-90 44 514)" text-anchor="middle">STORE</text>
+
+  <rect x="24" y="566" width="1152" height="88" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="610" class="chip-t" transform="rotate(-90 44 610)" text-anchor="middle">OUTPUT</text>
+
+  <!-- ============ CARDS (category = HUE) ============ -->
+
+  <!-- ENTRY · CLI -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="156" width="320" height="72" rx="9"/>
+    <rect class="accent" x="440" y="156" width="5" height="72" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="178" r="9"/><text class="badge-n" x="462" y="182">1</text>
+  <text class="ctitle" x="484" y="182" fill="var(--entry-t)">repolens CLI</text>
+  <text class="cbody" x="484" y="202">find · lint · index — run by an agent or a dev</text>
+  <text class="cmono" x="484" y="220">repolens find "where does X live?"</text>
+
+  <!-- SCAN · Repo corpus -->
+  <g filter="url(#lift)">
+    <rect class="card" x="80" y="254" width="280" height="84" rx="9"/>
+    <rect class="accent" x="80" y="254" width="5" height="84" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="102" y="278" fill="var(--data-t)">Repo corpus</text>
+  <text class="cbody" x="102" y="298">docs · code · DB schema · notes</text>
+  <text class="cmono" x="102" y="316">the source corpus</text>
+
+  <!-- SCAN · Corpus scanner -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="254" width="320" height="84" rx="9"/>
+    <rect class="accent" x="440" y="254" width="5" height="84" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="276" r="9"/><text class="badge-n" x="462" y="280">2</text>
+  <text class="ctitle" x="484" y="280" fill="var(--compute-t)">Corpus scanner</text>
+  <text class="cbody" x="484" y="300">purpose-lines · frontmatter · section chunks</text>
+  <text class="cmono" x="484" y="318">walks the whole corpus</text>
+
+  <!-- SCAN · Hygiene linter (governance) -->
+  <g filter="url(#lift)">
+    <rect class="card" x="800" y="254" width="296" height="84" rx="9"/>
+    <rect class="accent" x="800" y="254" width="5" height="84" rx="2.5" fill="var(--governance-a)"/>
+  </g>
+  <text class="ctitle" x="822" y="278" fill="var(--governance-t)">Hygiene linter</text>
+  <text class="cbody" x="822" y="298">typed structural checks · blocks commits</text>
+  <text class="cmono" x="822" y="316">pre-commit gate</text>
+
+  <!-- CORE · Incremental indexer -->
+  <g filter="url(#lift)">
+    <rect class="card" x="80" y="366" width="300" height="84" rx="9"/>
+    <rect class="accent" x="80" y="366" width="5" height="84" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="102" cy="388" r="9"/><text class="badge-n" x="102" y="392">3</text>
+  <text class="ctitle" x="124" y="392" fill="var(--compute-t)">Incremental indexer</text>
+  <text class="cbody" x="124" y="412">content-hash · only changed files</text>
+  <text class="cmono" x="124" y="430">re-indexes each query</text>
+
+  <!-- CORE · Search / rank engine -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="366" width="320" height="84" rx="9"/>
+    <rect class="accent" x="440" y="366" width="5" height="84" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="388" r="9"/><text class="badge-n" x="462" y="392">4</text>
+  <text class="ctitle" x="484" y="392" fill="var(--compute-t)">Search / rank engine</text>
+  <text class="cbody" x="484" y="412">BM25 (FTS5) + semantic KNN · RRF fused</text>
+  <text class="cmono" x="484" y="430">hybrid · degrades to lexical</text>
+
+  <!-- CORE · Local embedding model (external) -->
+  <g filter="url(#lift)">
+    <rect class="card" x="820" y="366" width="296" height="84" rx="9"/>
+    <rect class="accent" x="820" y="366" width="5" height="84" rx="2.5" fill="var(--external-a)"/>
+  </g>
+  <text class="ctitle" x="842" y="392" fill="var(--external-t)">Local embedding model</text>
+  <text class="cbody" x="842" y="412">embeds chunks + query · CPU, no keys</text>
+  <text class="cmono" x="842" y="430">fastembed / Ollama</text>
+
+  <!-- STORE · FTS index store -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="478" width="320" height="80" rx="9"/>
+    <rect class="accent" x="440" y="478" width="5" height="80" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="462" y="502" fill="var(--data-t)">FTS index store</text>
+  <text class="cbody" x="462" y="522">SQLite FTS5 + vector index</text>
+  <text class="cmono" x="462" y="540">disposable · gitignored cache</text>
+
+  <!-- OUTPUT · Ranked results -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="574" width="320" height="72" rx="9"/>
+    <rect class="accent" x="440" y="574" width="5" height="72" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="596" r="9"/><text class="badge-n" x="462" y="600">5</text>
+  <text class="ctitle" x="484" y="600" fill="var(--entry-t)">Ranked results</text>
+  <text class="cbody" x="484" y="620">ranked files + the matching passage</text>
+  <text class="cmono" x="484" y="638">find hits · lint report</text>
+
+  <!-- ============ EDGES (clean primary find-path spine — linter + secondary paths narrated in footer) ============ -->
+  <!-- ① CLI → ② scanner -->
+  <path class="edge" d="M600 228 L600 254" marker-end="url(#ah)"/>
+  <!-- repo corpus → scanner (reads source) -->
+  <path class="edge" d="M360 296 L440 296" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="400" y="290" text-anchor="middle">reads</text>
+  <!-- ② scanner → ③ indexer -->
+  <path class="edge" d="M600 338 L600 352 L230 352 L230 366" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="420" y="346" text-anchor="middle">chunks</text>
+  <!-- ③ indexer → ④ search engine -->
+  <path class="edge" d="M380 408 L440 408" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="410" y="402" text-anchor="middle">index</text>
+  <!-- ④ search ↔ embedding model -->
+  <path class="edge" d="M760 408 L820 408" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="790" y="402" text-anchor="middle">embed</text>
+  <!-- ④ search → FTS store (reads the index) · center spine -->
+  <path class="edge" d="M600 450 L600 478" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="612" y="466">reads</text>
+  <!-- FTS store → ⑤ ranked results · center spine -->
+  <path class="edge" d="M600 558 L600 574" marker-end="url(#ah)"/>
+
+  <!-- ============ FOOTER (flow narration · provenance) ============ -->
+  <rect x="40" y="670" width="1120" height="66" rx="10" fill="#f6f7f4" stroke="var(--rule)"/>
+  <text x="58" y="690" class="footer"><tspan font-weight="700" fill="var(--ink)">Flow:</tspan> ① CLI find → ② scanner walks docs, code purpose-lines + DB schema → ③ indexer refreshes changed files → ④ engine fuses BM25 + semantic (RRF) over the FTS index → ⑤ ranked files + passages.</text>
+  <text x="58" y="708" class="footer">Parallel: the hygiene linter checks the same corpus + blocks bad commits (its own lint-report path); the indexer writes the FTS index the engine reads; embeddings run on-machine, free.</text>
+  <text x="58" y="726" class="prov">public C4 container view</text>
+
+  <text x="40" y="756" class="prov">Blueprint Lanes — lanes carry layering in neutral value; cards carry category in hue. Public C4-Container view. Standard: _map-spec.md.</text>
+</svg>

@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img"
+     aria-label="Public architecture map of revline, a single-file, zero-dependency Claude Code status line. Claude Code runs revline each render and pipes the session JSON in; the entrypoint dispatches the render path, which accumulates a token read/write history and reads git state from small temp stores, then composes and prints the terminal footer. An offline cleanup path prunes stale state off the request path."
+     font-family="'Inter','Segoe UI',system-ui,-apple-system,sans-serif">
+  <!--
+    revline (public) · Blueprint Lanes · architecture-map v0.3.0 · public · FLOW
+    Layers = neutral lanes (grouping in VALUE). Cards = category (meaning in HUE).
+    Container-level, sanitized. Palette + rules: _map-spec.md.
+  -->
+  <defs>
+    <style>
+      :root{
+        --paper:#eceee9; --lane-a:#f6f7f4; --lane-b:#f1f2ee; --rule:#e0e2dd;
+        --card:#ffffff; --ink:#26303a; --body:#4b5560; --muted:#8b939c;
+        --header:#1d2a36; --chip:#dfe3e4;
+        --entry-a:#00a19a; --entry-t:#006a65;
+        --compute-a:#8673d9; --compute-t:#564597;
+        --data-a:#2f8adc; --data-t:#00579a;
+        --external-a:#b761b1; --external-t:#7b3577;
+        --scheduled-a:#68737e; --scheduled-t:#474e55;
+        --governance-a:#d15c56; --governance-t:#90302e;
+        --free-a:#2e9e52; --free-t:#00682a;
+        --metered-a:#b47900; --metered-t:#7a4a00;
+      }
+      .h1{font-size:25px;font-weight:800;fill:#eef2f6;letter-spacing:.2px}
+      .h2{font-size:13px;fill:#aab6c1}
+      .meta{font-size:11px;fill:#8b98a4}
+      .chip-t{font-size:11px;font-weight:700;letter-spacing:1.5px;fill:#5b6470}
+      .card{fill:var(--card);stroke:#e4e7e3;stroke-width:1}
+      .accent{stroke-width:0}
+      .ctitle{font-size:14.5px;font-weight:700}
+      .cbody{font-size:11.5px;fill:var(--body)}
+      .cmono{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;fill:var(--muted)}
+      .badge{fill:var(--header)} .badge-n{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle}
+      .edge{stroke:#9aa3aa;stroke-width:2;fill:none}
+      .edge-lbl{font-size:10px;fill:var(--muted)}
+      .legend-lbl{font-size:11.5px;fill:var(--body)}
+      .footer{font-size:11.5px;fill:var(--body)}
+      .prov{font-size:10.5px;fill:var(--muted)}
+    </style>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9aa3aa"/>
+    </marker>
+    <filter id="lift" x="-8%" y="-20%" width="116%" height="150%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="3.5" flood-color="#1d2a36" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="var(--paper)"/>
+
+  <!-- ============ HEADER ============ -->
+  <rect x="0" y="0" width="1200" height="92" fill="var(--header)"/>
+  <rect x="0" y="90" width="1200" height="2" fill="#0f1922"/>
+  <text x="40" y="44" class="h1">revline <tspan class="h2" dx="8">— system architecture</tspan></text>
+  <text x="40" y="70" class="h2">A single-file, zero-dependency Claude Code status line: reads session JSON each render, charts token read/write, prints a rich footer.</text>
+  <text x="1160" y="36" text-anchor="end" class="meta">v0.7.2 · 2026-07-23</text>
+  <text x="1160" y="54" text-anchor="end" class="meta">mode: public · archetype: FLOW</text>
+  <text x="1160" y="72" text-anchor="end" class="meta">revline · MIT</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g transform="translate(40,116)">
+    <text x="0" y="11" class="chip-t">LEGEND</text>
+    <g transform="translate(84,0)">
+      <!-- each swatch is a miniature of the card: white body + category accent bar -->
+      <rect x="0"   y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="1.5"   y="2.5" width="3" height="9" rx="1.5" fill="var(--entry-a)"    stroke="var(--entry-a)"/>    <text x="26"  y="11" class="legend-lbl">entry</text>
+      <rect x="72"  y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="73.5"  y="2.5" width="3" height="9" rx="1.5" fill="var(--compute-a)"  stroke="var(--compute-a)"/>  <text x="98"  y="11" class="legend-lbl">compute</text>
+      <rect x="164" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="165.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--data-a)"     stroke="var(--data-a)"/>     <text x="190" y="11" class="legend-lbl">data</text>
+      <rect x="232" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="#e4e7e3"/><rect x="233.5" y="2.5" width="3" height="9" rx="1.5" fill="var(--scheduled-a)" stroke="var(--scheduled-a)"/><text x="258" y="11" class="legend-lbl">scheduled</text>
+      <g transform="translate(344,0)">
+        <rect x="0" y="0" width="20" height="14" rx="3" fill="#ffffff" stroke="var(--muted)" stroke-dasharray="3 2"/>
+        <text x="26" y="11" class="legend-lbl">offline (dashed)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ LANES (neutral = grouping in VALUE) ============ -->
+  <rect x="24" y="150" width="1152" height="96" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="198" class="chip-t" transform="rotate(-90 44 198)" text-anchor="middle">ENTRY</text>
+
+  <rect x="24" y="254" width="1152" height="104" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="306" class="chip-t" transform="rotate(-90 44 306)" text-anchor="middle">DISPATCH</text>
+
+  <rect x="24" y="366" width="1152" height="104" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="418" class="chip-t" transform="rotate(-90 44 418)" text-anchor="middle">RENDER</text>
+
+  <rect x="24" y="478" width="1152" height="104" rx="10" fill="var(--lane-b)"/>
+  <text x="44" y="530" class="chip-t" transform="rotate(-90 44 530)" text-anchor="middle">STORES</text>
+
+  <rect x="24" y="590" width="1152" height="100" rx="10" fill="var(--lane-a)"/>
+  <text x="44" y="640" class="chip-t" transform="rotate(-90 44 640)" text-anchor="middle">OUTPUT</text>
+
+  <!-- ============ CARDS (category = HUE) ============ -->
+
+  <!-- ENTRY · Claude Code -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="162" width="320" height="72" rx="9"/>
+    <rect class="accent" x="440" y="162" width="5" height="72" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="184" r="9"/><text class="badge-n" x="462" y="188">1</text>
+  <text class="ctitle" x="484" y="186" fill="var(--entry-t)">Claude Code</text>
+  <text class="cbody" x="484" y="206">runs the status line each render (~1/s)</text>
+  <text class="cmono" x="484" y="224">pipes session JSON in</text>
+
+  <!-- DISPATCH · entrypoint -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="266" width="320" height="76" rx="9"/>
+    <rect class="accent" x="440" y="266" width="5" height="76" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="288" r="9"/><text class="badge-n" x="462" y="292">2</text>
+  <text class="ctitle" x="484" y="290" fill="var(--compute-t)">Entrypoint / dispatch</text>
+  <text class="cbody" x="484" y="310">routes: render path · control verbs · cleanup</text>
+  <text class="cmono" x="484" y="328">one path per invocation</text>
+
+  <!-- DISPATCH · offline cleanup (offline → dashed) -->
+  <g filter="url(#lift)">
+    <rect class="card" x="820" y="266" width="300" height="76" rx="9" stroke="var(--scheduled-a)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <rect class="accent" x="820" y="266" width="5" height="76" rx="2.5" fill="var(--scheduled-a)"/>
+  </g>
+  <text class="ctitle" x="842" y="290" fill="var(--scheduled-t)">Offline cleanup</text>
+  <text class="cbody" x="842" y="310">prunes stale state · wipes closed sessions</text>
+  <text class="cmono" x="842" y="328">off the request path</text>
+
+  <!-- RENDER · render hub -->
+  <g filter="url(#lift)">
+    <rect class="card" x="440" y="378" width="320" height="80" rx="9"/>
+    <rect class="accent" x="440" y="378" width="5" height="80" rx="2.5" fill="var(--compute-a)"/>
+  </g>
+  <circle class="badge" cx="462" cy="400" r="9"/><text class="badge-n" x="462" y="404">3</text>
+  <text class="ctitle" x="484" y="402" fill="var(--compute-t)">Render</text>
+  <text class="cbody" x="484" y="422">accumulates read/write history · reads git</text>
+  <text class="cmono" x="484" y="440">composes the 4-section dashboard</text>
+
+  <!-- STORES · token-history store -->
+  <g filter="url(#lift)">
+    <rect class="card" x="250" y="490" width="270" height="80" rx="9"/>
+    <rect class="accent" x="250" y="490" width="5" height="80" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="272" y="514" fill="var(--data-t)">Token-history store</text>
+  <text class="cbody" x="272" y="534">read/write history · self-scaling</text>
+  <text class="cmono" x="272" y="552">small temp state</text>
+
+  <!-- STORES · git state -->
+  <g filter="url(#lift)">
+    <rect class="card" x="690" y="490" width="270" height="80" rx="9"/>
+    <rect class="accent" x="690" y="490" width="5" height="80" rx="2.5" fill="var(--data-a)"/>
+  </g>
+  <text class="ctitle" x="712" y="514" fill="var(--data-t)">Git state</text>
+  <text class="cbody" x="712" y="534">repo · branch · ahead/behind · dirty</text>
+  <text class="cmono" x="712" y="552">cached, short TTL</text>
+
+  <!-- OUTPUT · footer output -->
+  <g filter="url(#lift)">
+    <rect class="card" x="450" y="602" width="320" height="76" rx="9"/>
+    <rect class="accent" x="450" y="602" width="5" height="76" rx="2.5" fill="var(--entry-a)"/>
+  </g>
+  <circle class="badge" cx="472" cy="624" r="9"/><text class="badge-n" x="472" y="628">4</text>
+  <text class="ctitle" x="494" y="626" fill="var(--entry-t)">Footer output</text>
+  <text class="cbody" x="494" y="646">the rendered status line Claude Code displays</text>
+  <text class="cmono" x="494" y="664">printed to the terminal</text>
+
+  <!-- ============ EDGES (orthogonal, rounded, in gutters — never over a card) ============ -->
+  <!-- Claude Code → dispatch -->
+  <path class="edge" d="M600 234 L600 266" marker-end="url(#ah)"/>
+  <!-- dispatch → render (render path) -->
+  <path class="edge" d="M600 342 L600 378" marker-end="url(#ah)"/>
+  <!-- dispatch → offline cleanup -->
+  <path class="edge" d="M760 304 L820 304" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="790" y="298" text-anchor="middle">triggers</text>
+  <!-- render → token-history store -->
+  <path class="edge" d="M490 458 L490 475 L385 475 L385 490" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="420" y="469" text-anchor="middle">write</text>
+  <!-- render → git state -->
+  <path class="edge" d="M730 458 L730 475 L825 475 L825 490" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="800" y="469" text-anchor="middle">read</text>
+  <!-- render → footer (spine ④, through the center store gutter) -->
+  <path class="edge" d="M610 458 L610 602" marker-end="url(#ah)"/>
+  <text class="edge-lbl" x="620" y="530">print</text>
+
+  <!-- ============ FOOTER (flow narration · provenance) ============ -->
+  <rect x="40" y="700" width="1120" height="58" rx="10" fill="#f6f7f4" stroke="var(--rule)"/>
+  <text x="58" y="718" class="footer"><tspan font-weight="700" fill="var(--ink)">Flow:</tspan> ① Claude Code pipes session JSON → ② the entrypoint dispatches the render path → ③ render accumulates the token read/write history + reads git state → ④ prints the dashboard to the footer.</text>
+  <text x="58" y="735" class="footer">Offline (dashed): the cleanup path prunes stale state and wipes closed sessions, off the request path.</text>
+  <text x="58" y="752" class="prov">public C4 container view</text>
+
+  <text x="40" y="775" class="prov">Blueprint Lanes — lanes carry layering in neutral value; cards carry category in hue. Standard: _map-spec.md.</text>
+</svg>

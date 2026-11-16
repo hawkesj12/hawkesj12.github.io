@@ -322,14 +322,14 @@
 
   <article class="card hero">
     <div class="card-head">
-      <h3>Atlas <span class="sub">— a production AI operations platform</span></h3>
-      <span class="pill live">Going to production</span>
+      <h3>Atlas <span class="sub">— an AI operations platform</span></h3>
+      <span class="pill self">Paused before production</span>
     </div>
     <p class="what">Atlas is the AI operations platform I built for my employer's warehouse-automation division. Winning a job used to mean chasing spreadsheets, shared folders, and email threads. Atlas brings all of it into one place: the opportunity, the site photos, the estimate, the vendor quotes, the proposal, and the milestones, on a dashboard the team can slice.</p>
 
     <p class="what">Claude works inside it: answering questions from the team's own records, reading incoming customer documents and pulling out the numbers people used to retype by hand, and researching accounts overnight. It's <b>44 tables and 205 API routes</b> behind a React front end, and it runs as one app against one database. No microservices, no queues, no containers.</p>
 
-    <p class="why"><b>Why it matters:</b> it replaces a stack of disconnected tools with one platform on one workflow, so the team moves faster, gets it right more often, and can finally see the whole picture. I originated it, built it solo from architecture through deployment, demoed it to the company president, and it's on its way to production.</p>
+    <p class="why"><b>Why it matters:</b> it replaces a stack of disconnected tools with one platform on one workflow, so the team moves faster, gets it right more often, and can finally see the whole picture. I originated it, built it solo from architecture through deployment, and demoed it to the company president. It was paused before production.</p>
 
     <div class="tags">
       <span class="tag">Python · FastAPI</span><span class="tag">RAG / retrieval</span><span class="tag">React 19 / TypeScript</span>
@@ -366,14 +366,15 @@
       <h3><a class="inl" href="https://jobfitr.app" target="_blank" rel="noopener">JobFitr <span class="arrow">↗</span></a> <span class="sub">— a live job-search web app</span></h3>
       <span class="pill live">Live</span>
     </div>
-    <p class="what">Answer five questions and get back a ranked list of jobs that actually fit you, each one linking straight to the company's own application page. It scores every posting against your answers, merges the same job across sources into one entry, and remembers what you've seen or applied to, so you're only ever looking at what's new.</p>
-    <p class="what">Behind it, JobFitr keeps a live picture of the market by <b>pulling from several sources at once</b> (its own Job-Radar engine, USAJOBS, and Google Jobs) and storing what it finds. A search serves that cache when it's fresh and fetches live when it isn't, with concurrent identical searches sharing one call and a daily ceiling so the free quotas never run away.</p>
+    <p class="what">Describe the work you want in a short conversation and get back up to five jobs that actually fit you, each with its reasoning and a line quoted from the posting. Most link straight to the company's own application page, and each card says when one doesn't. It merges the same job across sources into one entry, a code check removes any pick that breaks a dealbreaker, and you can mark jobs as applied, saved in your own browser.</p>
+    <p class="what">Behind it, JobFitr keeps a live picture of the market by <b>pulling from several sources at once</b> (its own Job-Radar engine, plus Adzuna, USAJOBS, and Google Jobs) and storing what it finds. A search serves that cache when it's fresh and fetches live when it isn't, with concurrent identical searches sharing one call and a daily ceiling so the free quotas never run away.</p>
+    <p class="what"><b>How it ships:</b> two warm copies run side by side on the server, blue and green, the open-source version of Azure deployment slots. A new build goes to the idle copy first, at its own preview address, and has to pass a gate script before it goes live: the store loads, the pool is the expected size, and a real test conversation completes. One command then flips which copy serves jobfitr.app, and flipping back is the rollback. Tests and lint pass before every commit. Caddy, systemd and uv; no Docker.</p>
     <p class="why"><b>Why it matters:</b> I built the engine first and published it, then shipped the product on top of it, running on my own server at <b>jobfitr.app</b>. No account, no tracking, nothing to sign up for; a stranger can use it right now.</p>
 
     <div class="engine">
       <div class="elabel">Powered by my own engine · open source</div>
       <h4><a class="inl" href="https://github.com/hawkesj12/job-radar" target="_blank" rel="noopener">Job-Radar <span class="arrow">↗</span></a></h4>
-      <p>Job-Radar is the discovery engine underneath. It finds the jobs. It polls companies' own hiring feeds directly, so a role can surface the hour it posts, and it works out which companies are worth polling in the first place, including the enterprise systems that reach hospitals, manufacturers, and government labs rather than only startups. Ten public job APIs cover everything else. A full scan of the open market takes about a minute.</p>
+      <p>Job-Radar is the discovery engine underneath. It finds the jobs. It polls companies' own hiring feeds directly, so a role can surface the hour it posts, and it works out which companies are worth polling in the first place, including the enterprise systems that reach hospitals, manufacturers, and government labs rather than only startups. In all it speaks nineteen job-board APIs, from companies' own hiring systems to the big aggregators.</p>
       <p class="verify"><code>pip install job-radar</code> · <a class="inl" href="https://pypi.org/project/job-radar/" target="_blank" rel="noopener">on PyPI ↗</a> · Apache-2.0</p>
     </div>
 
@@ -389,7 +390,7 @@
     <article class="card">
       <div class="card-head"><h3>RepoLens</h3><span class="pill self">Open source</span></div>
       <p class="what">RepoLens is a <b>context engine for AI agents</b>. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search, and it is set-and-forget: every search re-indexes whatever changed, so results never go stale.</p>
-      <p class="why"><b>Why it matters:</b> I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. It ships a benchmark so you don't have to take my word for it: on its own repo, <b>hybrid finds the right file in the top eight every time; keyword-only manages half.</b> Runs on your machine, no API keys.</p>
+      <p class="why"><b>Why it matters:</b> I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. It ships a benchmark so you don't have to take my word for it: on an 18-query test set from its own repo, <b>hybrid finds the right file in the top eight on all 18; keyword-only finds 39%.</b> Runs on your machine, no API keys.</p>
       <p class="verify"><code>pip install repolens-search</code></p>
       <div class="tags"><span class="tag">Hybrid search</span><span class="tag">SQLite · embeddings</span><span class="tag">MIT</span></div>
       <div class="cardfoot">
@@ -442,7 +443,7 @@
     </a>
     <a class="tool" href="https://github.com/hawkesj12/revline" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">Revline<span class="arrow">↗</span></span><span class="tcat">Statusline</span></div>
-      <div class="trole">My own status line for Claude Code: model, cost, git, and a live token-throughput tachometer in the footer. The one tool here I built myself.</div>
+      <div class="trole">My own status line for Claude Code: model, cost, git, and a live token-throughput tachometer in the footer.</div>
     </a>
     <a class="tool" href="https://tryvoiceink.com/" target="_blank" rel="noopener">
       <div class="thead"><span class="tname">VoiceInk<span class="arrow">↗</span></span><span class="tcat">Dictation</span></div>
@@ -545,15 +546,15 @@ _This is informational context about Justin Hawkes, copied from a link on his po
 - **Location / mode:** Louisville, KY, remote.
 - **Looking for:** a senior role where building AI systems is the mandate, not something done on top of the job. Remote, at a product company with a mission worth believing in.
 - **Core stack:** Python, SQL (PostgreSQL / SQLite / DuckDB), FastAPI, React / TypeScript, Azure. RAG and retrieval, multi-agent orchestration, LLM application engineering.
-- **Shipped:** `pip install job-radar` (Apache-2.0), `pip install repolens-search` (MIT), Revline (open source), one AI platform built solo, going to production (Atlas), one live product (jobfitr.app).
+- **Shipped:** `pip install job-radar` (Apache-2.0), `pip install repolens-search` (MIT), Revline (open source), one AI platform built solo, paused before production (Atlas), one live product (jobfitr.app).
 - **How I build:** requirements come from the people who will use it; then the right tool off the shelf, or custom when a framework would cost more than it saves (Nova's orchestration and Atlas's ingestion pipeline are custom by choice, not for lack of a framework); research before committing; measure, do not guess.
 - **Contact:** hawkesj12@gmail.com · https://github.com/hawkesj12 · https://www.linkedin.com/in/justin-hawkes
 
 **How the work connects:** RepoLens (retrieval) indexes Arcanum, a field-guide knowledge base, and Nova (my multi-agent assistant) consults both. Job-Radar (the open-source engine) is the discovery layer under JobFitr (the live product). Revline instruments my own Claude Code sessions.
 
-## Atlas — production AI operations platform
+## Atlas — AI operations platform (paused before production)
 The AI operations platform I built for my employer's warehouse-automation division. A new opportunity is created in Atlas, and everything downstream lives there too: customers, site photos, estimates, vendor quotes, proposals, milestones, on a dashboard the team can slice. Claude works across it: answering questions from the team's own records, pulling structured data out of incoming customer documents, and researching accounts overnight. 44 tables, 205 API routes, a React front end, running as one app against one database, with no microservices, queues, or containers.
-Why it matters: nothing a model extracts touches a real record until a person accepts it. "AI proposes, humans dispose" is the governance that lets the business trust it with real work. I originated it, built it solo from architecture through deployment, demoed it to the company president, and it is on its way to production.
+Why it matters: nothing a model extracts touches a real record until a person accepts it. "AI proposes, humans dispose" is the governance that lets the business trust it with real work. I originated it, built it solo from architecture through deployment, and demoed it to the company president. It was paused before production.
 Stack: Python/FastAPI, RAG/retrieval, React 19/TypeScript, PostgreSQL, Azure, cost-tiered LLM routing, Entra/JWT auth, per-call cost tracing.
 
 ## Nova — my own multi-agent assistant (personal R&D)
@@ -561,15 +562,15 @@ An assistant I built to work alongside me: specialized agents (research, build, 
 Stack: multi-agent orchestration, adversarial verification, Python, scheduled automation, SQLite.
 
 ## JobFitr — live job-search web app (jobfitr.app)
-Answer five questions, get a ranked list of jobs that fit you, each linking straight to the company's own application page. It scores every posting, dedupes across sources, and remembers what you have seen or applied to. Behind it, JobFitr keeps a live picture of the market by pulling from several sources at once (its own Job-Radar engine, USAJOBS, and Google Jobs) and storing what it finds, serving the cache when it is fresh and fetching live when it is not. No account, no tracking, a stranger can use it right now. Built on Job-Radar (below), which I open-sourced first.
+Describe the work you want in a short conversation and get up to five jobs that fit, each with its reasoning and a quote from the posting, most linking straight to the company's own application page. It dedupes across sources, enforces dealbreakers in code, and lets you mark jobs as applied in your own browser. Behind it, JobFitr keeps a live picture of the market by pulling from several sources at once (its own Job-Radar engine, plus Adzuna, USAJOBS, and Google Jobs) and storing what it finds, serving the cache when it is fresh and fetching live when it is not. No account, no tracking, a stranger can use it right now. Built on Job-Radar (below), which I open-sourced first. It ships blue-green: two warm copies on one server, a new build goes to the idle one and must pass a gate script (store loads, pool size, a real test conversation) before one command flips it live; flipping back is the rollback.
 
 ## Job-Radar — open-source job-market discovery engine (pip install job-radar, Apache-2.0)
-Polls companies' own hiring feeds directly so a role surfaces the hour it posts, works out which companies are worth polling in the first place (including the enterprise systems that reach hospitals, manufacturers, and government labs, not just startups), and sweeps ten public job APIs for the rest. A full scan of the open market takes about a minute.
+Polls companies' own hiring feeds directly so a role surfaces the hour it posts, works out which companies are worth polling in the first place (including the enterprise systems that reach hospitals, manufacturers, and government labs, not just startups), and speaks nineteen job-board APIs in all.
 GitHub repo: https://github.com/hawkesj12/job-radar · PyPI: https://pypi.org/project/job-radar/
 
 ## RepoLens — a context engine for AI agents (pip install repolens-search, MIT)
-RepoLens is the retrieval layer that gives an AI agent the right context. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search. I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. Set-and-forget: every search re-indexes whatever changed, so results are never stale. Ships a benchmark: on its own repo, hybrid finds the right file in the top eight every time; keyword-only manages half. Runs locally, no API keys.
-GitHub repo: https://github.com/hawkesj12/repolens
+RepoLens is the retrieval layer that gives an AI agent the right context. An agent asks it a question in plain language and gets back the exact files that answer it, ranked, plus the passage inside each one, so a model gets the context it needs and nothing it doesn't. It fuses keyword and semantic search. I built it as the retrieval layer for my own knowledge base, Arcanum, so my agents could pull grounded context instead of guessing. Set-and-forget: every search re-indexes whatever changed, so results are never stale. Ships a benchmark: on an 18-query test set from its own repo, hybrid finds the right file in the top eight on all 18; keyword-only finds 39%. Runs locally, no API keys.
+GitHub repo: https://github.com/hawkesj12/repolens · PyPI: https://pypi.org/project/repolens-search/
 
 ## Revline — single-file status line for Claude Code (open source)
 Answers at a glance what you would otherwise stop and check: repo and branch, what is staged, time since last commit, context left, session cost, rate-limit budget and reset, and whether the model is thinking, plus a live tachometer of tokens read and written across five timescales. One readable Python file, no dependencies.

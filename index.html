@@ -257,6 +257,18 @@
   .cform .cnote.ok { color:var(--live); }
   .cform .cnote.err { color:var(--err); }
 
+  /* ---- link to the more page ---- */
+  .morelink { display:block; text-decoration:none; margin-top:16px; padding:26px 28px; border-radius:14px;
+    background:var(--accent); color:var(--on-accent); box-shadow:var(--shadow);
+    transition:transform .15s, box-shadow .15s; }
+  .morelink:hover { transform:translateY(-2px); box-shadow:0 2px 4px rgba(22,27,34,.08),0 16px 36px rgba(22,27,34,.16); }
+  .morelink:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
+  .morelink span { display:block; }
+  .morelink .ml-k { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; font-weight:600; opacity:.85; }
+  .morelink .ml-t { font-size:clamp(22px,3vw,28px); font-weight:700; letter-spacing:-.015em; margin-top:8px; }
+  .morelink .ml-a { display:inline; margin-left:6px; }
+  .morelink .ml-s { margin-top:8px; font-size:15px; max-width:64ch; opacity:.92; }
+
   .fineprint { margin-top:44px; padding-top:18px; border-top:1px solid var(--line);
     font-family:var(--mono); font-size:12px; color:var(--muted); display:flex;
     justify-content:space-between; flex-wrap:wrap; gap:8px; }
@@ -276,6 +288,7 @@
   <div class="topbar">
     <div class="brand"><span class="dot"></span>JUSTIN HAWKES</div>
     <nav class="nav">
+      <a href="more.html">More I've built</a>
       <a href="https://github.com/hawkesj12" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.linkedin.com/in/justin-hawkes" target="_blank" rel="noopener">LinkedIn</a>
       <a href="mailto:hawkesj12@gmail.com">Email</a>
@@ -432,6 +445,12 @@
     <p class="why"><b>Why it matters:</b> it's the same move I make now, just in older tools: feed it the inputs, get back a finished thing, and a day of work becomes a minute. I built a handful of tools like this across two companies over those years.</p>
     <div class="tags"><span class="tag">AutoCAD · VBA</span><span class="tag">Parametric modeling</span><span class="tag">Generative geometry</span><span class="tag">4–12 hrs → 60 sec</span></div>
   </article>
+
+  <a class="morelink" href="more.html">
+    <span class="ml-k">That's eight. There are more.</span>
+    <span class="ml-t">The projects nobody asked me for <span class="ml-a">→</span></span>
+    <span class="ml-s">A stereo tuned with a measurement microphone, a music engine, a playbook maker, a Mac app, maps, and about 40 connected systems.</span>
+  </a>
 
   <h2 class="rail">How I work</h2>
   <p class="tools-lede">Part of how one person ships this much: I don't guess, about what to build or how. The <em>what</em> comes from the people who will use it. I ask the right questions until the real problem is clear, then I go build it. The <em>how</em> is deliberate tool choice. I use what a project actually needs, and build custom when a framework would add more weight than value. Nova's orchestration and Atlas's pipeline are custom by choice, and I work in SQL across PostgreSQL, SQLite, and DuckDB. I research a tool before I commit to it: what it's good at, where it breaks, what it costs me later. Sometimes the right one is the obvious default and sometimes it's something local or open that most people haven't picked up. And the open-source tools on this page, Revline included, all began the same way: something I built because I needed it, then published when it turned out other people did too.</p>

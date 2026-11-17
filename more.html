@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More I've built — Justin Hawkes</title>
+<meta name="description" content="The rest of what Justin Hawkes has built: a measured room tune-up, a music recommendation engine, a playbook maker for coaches, a native Mac app, maps, and about 40 connected APIs.">
+<meta property="og:title" content="More I've built — Justin Hawkes">
+<meta property="og:description" content="The side projects: audio measurement, music data, maps, a Mac app, a playbook maker, and about 40 connected APIs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://justinhawkes.dev/more.html">
+<meta property="og:image" content="https://justinhawkes.dev/og.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='28' y='28' width='44' height='44' rx='8' transform='rotate(45 50 50)' fill='%23B25E2A'/></svg>">
+<style>
+  :root {
+    --paper:#F5F7FA; --card:#FFFFFF; --ink:#161B22; --ink-soft:#3D4653;
+    --muted:#5B6675; --line:#E1E6ED; --line-soft:#EDF0F5;
+    --accent:#B25E2A; --accent-ink:#9A4E20; --accent-wash:#F6EBE1; --on-accent:#fff;
+    --live:#15784A; --live-wash:#E3F3EA; --err:#C0392B;
+    --shadow:0 1px 2px rgba(22,27,34,.05),0 8px 24px rgba(22,27,34,.06);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#0F1319;--card:#171C24;--ink:#EEF1F6;--ink-soft:#C3CBD7;--muted:#8B96A6;
+      --line:#242B36;--line-soft:#1E242E;--accent:#DE9152;--accent-ink:#E9A468;--accent-wash:#2A2018;--on-accent:#241A12;
+      --live:#54C98A;--live-wash:#17271E;--err:#E77A6B;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);}
+  }
+
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.55; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .wrap { max-width:940px; margin:0 auto; padding:44px 28px 72px; }
+
+  /* a11y utilities */
+  .vh { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  .skip { position:absolute; left:-9999px; top:0; z-index:20; background:var(--accent);
+    color:var(--on-accent); font-family:var(--mono); font-size:13px; padding:10px 16px;
+    border-radius:0 0 8px 0; }
+  .skip:focus { left:0; }
+
+  /* ---- top bar ---- */
+  .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    flex-wrap:wrap; margin-bottom:48px; }
+
+  /* copy-for-AI — hand the reader clean context (ties to the "context is everything" headline) */
+  .ctxlink { display:inline-flex; align-items:center; gap:7px; margin-top:18px;
+    font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:.01em;
+    color:var(--accent-ink); background:none; border:0; padding:0 0 2px; cursor:pointer;
+    border-bottom:1px solid color-mix(in srgb,var(--accent) 42%,transparent);
+    transition:color .15s, border-color .15s; }
+  .ctxlink:hover { border-color:var(--accent); }
+  .ctxlink:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+  .ctxlink .ci { width:14px; height:14px; flex-shrink:0; }
+  .ctxlink.done { color:var(--live); border-color:var(--live); }
+  .brand { font-family:var(--mono); font-weight:600; font-size:14px; letter-spacing:.02em;
+    display:flex; align-items:center; gap:9px; }
+  .brand .dot { width:9px; height:9px; border-radius:2px; background:var(--accent);
+    transform:rotate(45deg); }
+  .nav { display:flex; gap:6px; flex-wrap:wrap; }
+  .nav a { font-family:var(--mono); font-size:12.5px; text-decoration:none; color:var(--ink-soft);
+    padding:7px 12px; border:1px solid var(--line); border-radius:8px; background:var(--card);
+    transition:border-color .15s, color .15s, transform .15s; }
+  .nav a:hover { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+    transform:translateY(-1px); }
+  .nav a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---- hero ---- */
+  .eyebrow { font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-ink); font-weight:600; display:flex; align-items:center; gap:10px; }
+  .eyebrow::before { content:""; width:26px; height:2px; background:var(--accent); }
+  h1 { font-size:clamp(34px,5.4vw,54px); line-height:1.02; margin:18px 0 0; letter-spacing:-.02em;
+    text-wrap:balance; font-weight:700; }
+  .lede { font-size:clamp(17px,2.1vw,20px); color:var(--ink-soft); margin:20px 0 0; max-width:62ch;
+    text-wrap:balance; }
+  .sub-lede { font-size:15.5px; color:var(--muted); margin:14px 0 0; max-width:64ch; }
+
+  /* ---- hero portrait split (headline full-width, lede + photo share the row) ---- */
+  .hero-split { display:flex; gap:36px; align-items:center; margin-top:22px; }
+  .hero-copy { flex:1; min-width:0; }
+  .hero-copy .lede { margin-top:0; }
+  .portrait { width:410px; max-width:44%; height:auto; flex-shrink:0; border-radius:14px;
+    border:1px solid var(--line); box-shadow:var(--shadow); }
+  @media (max-width:760px){
+    .hero-split { flex-direction:column; align-items:stretch; gap:22px; }
+    .portrait { width:100%; max-width:100%; }
+  }
+
+  /* ---- context pipeline (the stack I build to connect data to the model) ---- */
+  .ctxflow { margin:32px 0 8px; }
+  .ctxflow-cap { font-family:var(--mono); font-size:12px; letter-spacing:.02em; color:var(--muted);
+    margin-bottom:13px; }
+  .ctxflow-cap b { color:var(--accent-ink); font-weight:600; }
+  .ctxflow-steps { list-style:none; margin:0; padding:3px 2px 6px; display:flex; gap:19px;
+    overflow-x:auto; scrollbar-width:thin; }
+  .ctxflow-steps li { position:relative; flex:0 0 auto; display:flex; flex-direction:column; gap:2px;
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:8px 11px;
+    box-shadow:var(--shadow); }
+  .ctxflow-steps li:not(:last-child)::after { content:"→"; position:absolute; right:-14px; top:50%;
+    transform:translateY(-50%); color:var(--accent); font-family:var(--mono); font-size:13px; font-weight:600; }
+  .cs-n { font-weight:600; font-size:13px; color:var(--ink); letter-spacing:-.01em; white-space:nowrap; }
+  .cs-t { font-family:var(--mono); font-size:9.5px; color:var(--muted); text-transform:uppercase;
+    letter-spacing:.05em; white-space:nowrap; }
+
+  /* ---- card footer actions (repo link · architecture map) ---- */
+  .cardfoot { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:16px; }
+  .cardact { display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.01em;
+    color:var(--accent-ink); background:none; border:0; padding:0; text-decoration:none;
+    border-bottom:1px solid transparent; transition:border-color .15s; }
+  .cardact:hover { border-bottom-color:color-mix(in srgb,var(--accent) 55%,transparent); }
+  .cardact:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+  .cardact svg { width:14px; height:14px; flex-shrink:0; }
+
+  /* ---- architecture map modal ---- */
+  .mapmodal { position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center;
+    padding:24px; background:rgba(15,19,25,.80); }
+  .mapmodal[open], .mapmodal.show { display:flex; }
+  .mapmodal-panel { position:relative; width:min(96vw,1500px); max-height:94vh; display:flex; flex-direction:column;
+    background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.5); }
+  .mapmodal-bar { display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 16px; border-bottom:1px solid var(--line); }
+  .mapmodal-title { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--ink); }
+  .mapmodal-x { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
+    cursor:pointer; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--ink-soft);
+    font-size:18px; line-height:1; transition:border-color .15s, color .15s; }
+  .mapmodal-x:hover { color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); }
+  .mapmodal-x:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .mapmodal-body { padding:16px; overflow:auto; background:var(--line-soft); }
+  .mapmodal-body img { display:block; width:100%; height:auto; border-radius:8px; background:#fff; }
+
+  /* ---- stats ---- */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:34px 0 8px; }
+  .stat { background:var(--card); padding:18px 20px; }
+  .stat .n { font-family:var(--mono); font-size:clamp(20px,2.8vw,26px); font-weight:600; color:var(--ink);
+    font-variant-numeric:tabular-nums; letter-spacing:-.01em; }
+  .stat .l { font-size:12.5px; color:var(--muted); margin-top:5px; line-height:1.35; }
+
+  .rail { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin:44px 0 14px; display:flex; align-items:center; gap:12px; }
+  .rail::after { content:""; flex:1; height:1px; background:var(--line); }
+
+  /* ---- cards ---- */
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 28px;
+    box-shadow:var(--shadow); margin-bottom:16px; position:relative; }
+  .card.hero { border-color:color-mix(in srgb,var(--accent) 32%,var(--line)); }
+  a.card { text-decoration:none; display:block; transition:transform .15s, border-color .15s, box-shadow .15s; }
+  a.card:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 50%,var(--line));
+    box-shadow:0 2px 4px rgba(22,27,34,.06),0 14px 34px rgba(22,27,34,.10); }
+  a.card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .card-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .card h3 { font-size:clamp(20px,2.6vw,25px); margin:0; letter-spacing:-.015em; font-weight:700; }
+  .card h3 .sub { color:var(--muted); font-weight:500; }
+  .card h3 .arrow { color:var(--accent); font-weight:600; margin-left:4px; }
+  .pill { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .pill.live { background:var(--live-wash); color:var(--live); }
+  .pill.live::before { content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
+    background:var(--live); margin-right:6px; vertical-align:middle; }
+  .pill.self { background:var(--accent-wash); color:var(--accent-ink); }
+  .what { margin:14px 0 0; color:var(--ink-soft); max-width:68ch; }
+  .why { margin:14px 0 0; padding-left:15px; border-left:2px solid var(--accent); color:var(--ink); max-width:66ch; }
+  .why b { color:var(--accent-ink); font-weight:600; }
+  /* verifiable-proof line — the "you can check this yourself" row */
+  .verify { margin:14px 0 0; font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+  .verify::before { content:"✓"; color:var(--live); font-weight:700; }
+  .verify code { background:var(--line-soft); border:1px solid var(--line); border-radius:5px;
+    padding:2px 7px; color:var(--ink-soft); font-size:12px; }
+  .verify a { color:var(--accent-ink); }
+
+  .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+  .tag { font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); background:var(--line-soft);
+    border:1px solid var(--line); padding:4px 9px; border-radius:6px; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid2 .card { margin-bottom:0; }
+  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:16px; }
+  .grid3 .card { margin-bottom:0; }
+
+  /* inline card links + nested engine block */
+  a.inl { text-decoration:none; }
+  a.inl:hover { color:var(--accent-ink); }
+  .engine { margin-top:20px; padding:16px 18px; border:1px solid var(--line); border-radius:11px;
+    background:var(--line-soft); }
+  .engine .elabel { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; }
+  .engine h4 { font-size:18px; margin:8px 0; letter-spacing:-.015em; font-weight:700; }
+  .engine h4 .arrow { color:var(--accent); font-weight:600; }
+  .engine p { margin:0; color:var(--ink-soft); font-size:14.5px; max-width:70ch; }
+
+  .through { margin-top:40px; padding:28px 30px; border-radius:14px; background:var(--ink); color:var(--paper); }
+  .through .rail-inv { font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:12px; }
+  .through p { margin:0; font-size:clamp(16px,2vw,19px); line-height:1.6; max-width:72ch; }
+  .through p em { color:var(--accent); font-style:normal; font-weight:600; }
+
+  /* ---- tools / how I work ---- */
+  .tools-lede { font-size:15.5px; color:var(--ink-soft); margin:0 0 18px; max-width:70ch; }
+  .toolgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:12px; }
+  .tool { display:block; text-decoration:none; background:var(--card); border:1px solid var(--line);
+    border-radius:11px; padding:15px 16px 14px; box-shadow:var(--shadow);
+    transition:transform .15s, border-color .15s, box-shadow .15s; }
+  .tool:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+    box-shadow:0 2px 4px rgba(22,27,34,.06),0 12px 28px rgba(22,27,34,.09); }
+  .tool:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .tool .thead { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .tool .tname { font-weight:600; font-size:15.5px; letter-spacing:-.01em; }
+  .tool .tname .arrow { color:var(--accent); font-weight:600; font-size:12.5px; margin-left:3px; }
+  .tool .tcat { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; white-space:nowrap; }
+  .tool .trole { font-size:12.7px; color:var(--muted); margin-top:5px; line-height:1.45; }
+
+  /* ---- contact ---- */
+  .contact { margin-top:40px; text-align:center; }
+  .contact .rail { justify-content:center; }
+  .contact .rail::after, .contact .rail::before { display:none; }
+  .contact h3 { font-size:clamp(22px,3vw,28px); margin:6px 0 6px; letter-spacing:-.015em; }
+  .contact p { color:var(--muted); margin:0 auto 20px; max-width:48ch; }
+  .clinks { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .clinks a { font-family:var(--mono); font-size:13px; text-decoration:none; color:var(--ink);
+    padding:10px 16px; border:1px solid var(--line); border-radius:9px; background:var(--card);
+    transition:border-color .15s,transform .15s,color .15s; }
+  .clinks a.primary { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+  .clinks a:hover { transform:translateY(-1px); border-color:color-mix(in srgb,var(--accent) 55%,var(--line)); }
+  .clinks a.primary:hover { border-color:var(--accent); color:var(--on-accent); }
+  .clinks a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---- contact form ---- */
+  .cform { max-width:520px; margin:24px auto 0; display:flex; flex-direction:column; gap:12px; text-align:left; }
+  .crow { display:flex; gap:12px; }
+  .crow input { flex:1; min-width:0; }
+  .cform input, .cform textarea { width:100%; font-family:var(--sans); font-size:15px; color:var(--ink);
+    background:var(--card); border:1px solid var(--line); border-radius:9px; padding:12px 14px;
+    transition:border-color .15s,box-shadow .15s; resize:vertical; }
+  .cform input::placeholder, .cform textarea::placeholder { color:var(--muted); }
+  .cform input:focus, .cform textarea:focus { outline:none; border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent); }
+  .csubmit { font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--on-accent);
+    background:var(--accent); border:1px solid var(--accent); padding:12px 18px; border-radius:9px;
+    cursor:pointer; transition:transform .15s,opacity .15s; }
+  .csubmit:hover:not(:disabled) { transform:translateY(-1px); }
+  .csubmit:disabled { opacity:.7; cursor:default; }
+  .csubmit:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .cform .cnote { font-size:14px; margin:2px 0 0; min-height:1.1em; text-align:center; max-width:none; }
+  .cform .cnote.ok { color:var(--live); }
+  .cform .cnote.err { color:var(--err); }
+
+  .fineprint { margin-top:44px; padding-top:18px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:12px; color:var(--muted); display:flex;
+    justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:720px){ .stats{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;}
+    .wrap{padding:32px 20px 56px;} }
+  @media (max-width:520px){ .crow{ flex-direction:column; } }
+  @media (prefers-reduced-motion: no-preference){
+    h1,.lede,.stats,.card,.through,.contact{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
+    @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  }
+
+  /* ---- more page ---- */
+  .back { font-family:var(--mono); font-size:12.5px; color:var(--accent-ink); text-decoration:none;
+    border-bottom:1px solid color-mix(in srgb,var(--accent) 42%,transparent); }
+  .back:hover { border-color:var(--accent); }
+  .shot { margin:20px 0 0; }
+  .shot img { display:block; width:100%; height:auto; border-radius:10px; border:1px solid var(--line); background:#fff; }
+  .shot figcaption { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:8px; }
+  .delta { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:20px 0 0; }
+  .delta div { background:var(--line-soft); padding:14px 16px; }
+  .delta .n { font-family:var(--mono); font-size:19px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .delta .n s { color:var(--muted); font-weight:500; font-size:14px; margin-right:6px; }
+  .delta .l { font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.35; }
+  .apis { display:grid; grid-template-columns:max-content 1fr; gap:10px 22px; margin:16px 0 0; font-size:14.5px; }
+  .apis dt { font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; padding-top:3px; }
+  .apis dd { margin:0; color:var(--ink-soft); }
+  .card h3.sm { font-size:19px; }
+  .card .what.sm { font-size:14.5px; }
+  @media (max-width:720px){ .delta{grid-template-columns:repeat(2,1fr);} .apis{grid-template-columns:1fr; gap:2px 0;} .apis dd{margin-bottom:10px;} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="index.html" style="text-decoration:none"><span class="dot"></span>JUSTIN HAWKES</a>
+    <nav class="nav">
+      <a href="index.html">Portfolio</a>
+      <a href="https://github.com/hawkesj12" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/justin-hawkes" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:hawkesj12@gmail.com">Email</a>
+    </nav>
+  </div>
+
+  <main id="main">
+  <header>
+    <div class="eyebrow">More I've built</div>
+    <h1>The projects nobody asked me for.</h1>
+    <p class="lede">The front page is the work I'd lead with. This page is the rest: what I build on a Saturday because a problem is in front of me and I want to know the answer. None of it is in one lane, and that's the point.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="n">30+</div><div class="l">repositories, most of them since 2025</div></div>
+    <div class="stat"><div class="n">~40</div><div class="l">outside systems and APIs connected</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">languages shipped: Python, TypeScript, Swift, C#, SQL, AutoLISP, VBA</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">habit behind all of it: measure, don't guess</div></div>
+  </div>
+
+  <h2 class="rail">Measured, not guessed</h2>
+
+  <article class="card hero">
+    <div class="card-head"><h3>Living Room Tune-Up <span class="sub">— tuning a stereo with a measurement microphone</span></h3><span class="pill self">Audio · Python</span></div>
+    <p class="what">My living-room system sounded boomy and I couldn't say why. So I bought a calibrated measurement microphone, put it at ear height on the couch, and wrote a test suite: sweeps and real songs played through the system, recorded at the seat, and compared against a saved baseline after every change. One day of tuning, every step measured.</p>
+    <p class="what">The measurements found what my ears couldn't name. <b>The sub was sitting almost 20 dB above the vocals</b>, one room note at 44 Hz towered over everything, and the sub and the towers were cancelling each other at 95 Hz. Flipping the sub's phase filled that hole. Two narrow cuts took down the room note. Moving the crossover let the towers carry the punch, so the bass keeps growing as the volume goes up instead of thinning out.</p>
+
+    <div class="delta">
+      <div><div class="n"><s>+19.1</s>+6.7 dB</div><div class="l">bass over vocals, 25 to 70 Hz</div></div>
+      <div><div class="n"><s>+29.1</s>+12.0 dB</div><div class="l">the 44 Hz room boom</div></div>
+      <div><div class="n"><s>-14.2</s>-9.9 dB</div><div class="l">deepest hole, 70 to 150 Hz</div></div>
+      <div><div class="n"><s>98.7</s>102.6 dB</div><div class="l">loudest clean level at the seat</div></div>
+    </div>
+
+    <figure class="shot">
+      <img src="more/song-3d.png" width="1200" height="1100" alt="A 3D surface chart of one song: time left to right, frequency front to back, loudness as height and colour, with the volume setting drawn as a line on the back wall" loading="lazy">
+      <figcaption>One song in 3D: time, frequency, and loudness at the seat. The line on the back wall is the volume knob, second by second.</figcaption>
+    </figure>
+
+    <p class="why"><b>Why it matters:</b> I had never done acoustics. The method is the same one I use on software: get a baseline, change one thing, measure again, and prove the test repeats before trusting it. Seven songs recorded before and after moved the same way on every track, and everything above 100 Hz stayed within half a decibel, which is how I knew the numbers were real.</p>
+    <div class="tags"><span class="tag">Python</span><span class="tag">Calibrated mic</span><span class="tag">Signal analysis</span><span class="tag">Plotly 3D</span><span class="tag">Before / after</span></div>
+  </article>
+
+  <article class="card">
+    <div class="card-head"><h3>A music engine <span class="sub">— rebuilding recommendations from my own library</span></h3><span class="pill self">Data · APIs</span></div>
+    <p class="what">I exported fifteen years of playlists and turned them into a database: 111 playlists collapsed into <b>10,734 distinct recordings</b>, matched by recording code because the same song showed up under several IDs. On top of it I built the tool the streaming service took away: plug in a song and get similar songs back, ranked on the audio features, plus a builder that finds music I have never picked and writes the playlist straight into my account.</p>
+    <p class="why"><b>Why it matters:</b> the interesting part is what failed. I tried three ways to recommend music from my own playlists and measured all three dead: 90% of my tracks appear in exactly one playlist, so there is no signal to learn from. The data also showed that <b>record label predicts what I like three times better than genre</b>. I wrote the failures down next to the wins.</p>
+    <div class="tags"><span class="tag">DuckDB</span><span class="tag">Spotify Web API · OAuth</span><span class="tag">Discogs</span><span class="tag">MusicBrainz · ListenBrainz</span><span class="tag">Rank fusion</span></div>
+  </article>
+
+  <h2 class="rail">Built for a real person</h2>
+
+  <div class="grid2">
+    <article class="card">
+      <div class="card-head"><h3>Coachbook</h3><span class="pill self">Product</span></div>
+      <p class="what">A playbook maker for volunteer coaches. Most coaching tools handle schedules or offer a video library. This makes the thing a coach needs in the gym: a printable, age-appropriate playbook, <b>one page per drill</b>, with the court diagram, the setup, how players rotate, and what to say.</p>
+      <p class="why"><b>Why it matters:</b> one engine, any sport. Every page comes from a small data file and one locked print template, so a layout change updates every page at once. I coached a full volleyball season from it.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">SVG diagrams</span><span class="tag">Print layout</span></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h3>Saithis</h3><span class="pill self">macOS · Swift</span></div>
+      <p class="what">A Mac menu bar app that reads selected text aloud. Press a hotkey and the selection lands in a reading window: play it, pause it, pick it back up, hear it in a different voice, or save it to a file. It runs cloud voices and local ones that never send the text off the machine.</p>
+      <p class="why"><b>Why it matters:</b> I had the vision for exactly how it should work, and I built it with AI doing the Swift. Knowing what to build, and directing it until it's right, is the skill.</p>
+      <div class="tags"><span class="tag">Swift</span><span class="tag">Native macOS</span><span class="tag">Local + cloud speech</span></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h3>An adventure game</h3><span class="pill self">Game</span></div>
+      <p class="what">A story game that runs in the browser, built for my daughter and me. It narrates out loud, keeps a party and an inventory, and saves the game so the story picks back up where it stopped.</p>
+      <p class="why"><b>Why it matters:</b> a complete game, front end to back end, built for fun.</p>
+      <div class="tags"><span class="tag">Python API</span><span class="tag">Web front end</span><span class="tag">Text-to-speech</span></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h3>Maps on paper</h3><span class="pill self">Geospatial</span></div>
+      <p class="what">A printed report for comparing schools: one page per school, each with its own map and a real drive time, and a summary page that wraps everything up. Addresses are geocoded, routes are computed, and the maps are drawn and captured automatically.</p>
+      <p class="why"><b>Why it matters:</b> from a list of addresses to a finished, printed report with no hand work in between.</p>
+      <div class="tags"><span class="tag">Census geocoder</span><span class="tag">OSRM routing</span><span class="tag">Leaflet · OpenStreetMap</span></div>
+    </article>
+  </div>
+
+  <h2 class="rail">Bigger ideas</h2>
+
+  <div class="grid2">
+    <article class="card">
+      <div class="card-head"><h3>bluefour</h3><span class="pill self">Private · in progress</span></div>
+      <p class="what">A desktop application for AI work that borrows from the tool I grew up in. In CAD you put things on layers and turn them on and off. bluefour does that with what the model sees: the context is a document you can edit, layer, save and reopen, instead of a chat that scrolls away.</p>
+      <p class="why"><b>Why it matters:</b> before writing any code I researched and wrote seven long pieces on how CAD documents, code editors and AI tools really work, so the design rests on facts. Glad to walk through it in a conversation.</p>
+      <div class="tags"><span class="tag">Electron</span><span class="tag">TypeScript</span><span class="tag">SQLite</span><span class="tag">Local models</span></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h3>AI inside AutoCAD</h3><span class="pill self">Described only</span></div>
+      <p class="what">A plugin I built for myself. It installs into AutoCAD and updates itself, with docked panels for the drawing in front, the block library and a searchable index of every drawing. On top of it, a local bridge that lets an AI agent work inside AutoCAD: place and reference drawings, check its own counts, and leave everything unsaved for a person to review.</p>
+      <p class="why"><b>Why it matters:</b> a set-up job that takes a person most of a morning took the agent sixteen minutes, and it caught a revision that arrived halfway through.</p>
+      <div class="tags"><span class="tag">C#</span><span class="tag">AutoLISP</span><span class="tag">AutoCAD .NET API</span><span class="tag">Agents</span></div>
+    </article>
+  </div>
+
+  <h2 class="rail">What's next</h2>
+
+  <article class="card">
+    <div class="card-head"><h3>A VR game</h3><span class="pill self">Exploring</span></div>
+    <p class="what">The next field I want to learn: building my own game for a VR headset. Nothing to show yet. It's here because this is how every project on this page started.</p>
+  </article>
+
+  <h2 class="rail">What I've connected</h2>
+
+  <article class="card">
+    <div class="card-head"><h3>About 40 outside systems</h3><span class="pill self">Integration</span></div>
+    <p class="what">Most real work is getting two systems to talk. These are the ones I've connected in code, each with its own sign-in, limits and way of shaping data.</p>
+    <dl class="apis">
+      <dt>AI models</dt><dd>Anthropic, OpenAI, OpenRouter, Groq, Perplexity, and local models through Ollama</dd>
+      <dt>Microsoft</dt><dd>Graph API, SharePoint and Lists, Entra sign-in, Azure Maps, Fabric</dd>
+      <dt>Job data</dt><dd>Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Rippling, Adzuna, USAJobs, Common Crawl, and eight more</dd>
+      <dt>Music</dt><dd>Spotify, Discogs, MusicBrainz, ListenBrainz</dd>
+      <dt>Maps</dt><dd>US Census geocoder, Nominatim, OSRM, OpenStreetMap</dd>
+      <dt>Personal data</dt><dd>Garmin, GitHub, market data</dd>
+      <dt>Hardware</dt><dd>LoRa mesh radios, AutoCAD's programming interfaces, a measurement microphone</dd>
+    </dl>
+  </article>
+
+  <h2 class="rail">Smaller things that run every day</h2>
+
+  <div class="grid3">
+    <article class="card">
+      <h3 class="sm">A printed morning brief</h3>
+      <p class="what sm">At 6:00 AM a job reads my mail, three calendars and my task list, and prints one two-sided page. I mark it up with a pen; a photo of the page updates the list.</p>
+    </article>
+    <article class="card">
+      <h3 class="sm">Local transcription</h3>
+      <p class="what sm">Recorded conversations become clean, speaker-labelled notes without the audio ever leaving my Mac, then get filed by person and meeting.</p>
+    </article>
+    <article class="card">
+      <h3 class="sm">Shared CI workflows</h3>
+      <p class="what sm">One set of scheduled security and link audits that every repository of mine reuses, maintained in one place. <a class="inl" href="https://github.com/hawkesj12/workflows" target="_blank" rel="noopener"><b>Public ↗</b></a></p>
+    </article>
+  </div>
+
+  <div class="through">
+    <div class="rail-inv">Why show this</div>
+    <p>A stereo, a playlist, a volleyball practice, a school decision. None of these were assignments. <em>Give me a problem I've never seen and I'll learn the field, measure it, and build the thing that solves it.</em></p>
+  </div>
+
+  <p style="margin-top:28px"><a class="back" href="index.html">← Back to the portfolio</a></p>
+
+  </main>
+
+  <footer class="fineprint">
+    <span>Justin Hawkes · AI Systems Builder</span>
+    <span>Louisville, KY · Remote</span>
+  </footer>
+</div>
+</body>
+</html>

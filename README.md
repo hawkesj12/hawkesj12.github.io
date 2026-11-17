@@ -17,6 +17,7 @@ about 300 KB, most of it a portrait and an OG image.
 | Path                     | What it is                                                                                      |
 | ------------------------ | ----------------------------------------------------------------------------------------------- |
 | `index.html`             | The entire site — markup, styles, and scripts in one file                                       |
+| `more.html`, `more/`      | The second page, "More I've built": side projects, with its one image                         |
 | `maps/*.svg`             | Architecture diagrams for Atlas, Nova, RepoLens, Revline, and JobFitr, opened in a modal viewer |
 | `portrait.jpg`, `og.png` | Portrait, and the social-preview card                                                           |
 | `CNAME`                  | Points GitHub Pages at the custom domain                                                        |
